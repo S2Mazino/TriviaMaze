@@ -46,7 +46,6 @@ public class Main {
 		
 		maze.lockRoom(2, 2);
 		
-		
 		maze.displayMaze();
 		
 
