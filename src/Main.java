@@ -39,16 +39,18 @@ public class Main {
 			myEndY = myInput.nextInt();
 			
 			maze = new Maze(myRows, myCols, myX, myY, myEndX, myEndY);
-//			maze = new Maze(4, 4, 0, 0, 3, 3);
+			maze = new Maze(4, 4, 0, 0, 3, 3);
 		}else {
 			maze = new Maze();
 		}
 		
-		maze.lockRoom(2, 2);
+		
 		
 		maze.displayMaze();
 		
-
+		System.out.println(maze.availableRoom());
+		
+		myInput.close();
 	}
 
 }
