@@ -1,3 +1,4 @@
+
 /**
  * A room in a maze that contains the status of a room.
  */
@@ -16,12 +17,13 @@ public class Room {
 	}
 	
 	//getters and setters
-	private boolean isLocked() {
+	public boolean isLocked() {
 		return myLocked;
 	}
 	
-	private void lockRoom() {
+	public void lockRoom() {
 		myLocked = true;
 	}
 	
 }
+
