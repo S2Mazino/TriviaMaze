@@ -179,16 +179,28 @@ public class Maze {
 		}
 	}
 	
-	public void move(String theDirection) {
-		if(theDirection.equals("N")) {
+	/**
+	 * Moves in desired direction and return true if the move was successful,
+	 * otherwise false.
+	 * @param theDirection the desired direction to move in
+	 * @return T/F if move was successful
+	 */
+	public boolean move(String theDirection) {
+		boolean moved = false;
+		if(theDirection.equals("N") && (myX-1 > 0) && !myMaze[myX-1][myY].isLocked()) {
 			myX--;
-		}else if(theDirection.equals("E")) {
+			moved = true;
+		}else if(theDirection.equals("E") && (myY+1 < myMaze[0].length) && !myMaze[myX][myY+1].isLocked()) {
 			myY++;
-		}else if(theDirection.equals("S")) {
+			moved = true;
+		}else if(theDirection.equals("S") && (myX+1 < myMaze.length) && !myMaze[myX+1][myY].isLocked()) {
 			myX++;
-		}else if(theDirection.equals("W")) {
+			moved = true;
+		}else if(theDirection.equals("W") && (myY-1 > 0) && !myMaze[myX][myY-1].isLocked()) {
 			myY--;
+			moved = true;
 		}
+		return moved;
 	}
 	
 

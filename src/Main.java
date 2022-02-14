@@ -25,7 +25,7 @@ public class Main {
 		
 		maze = new Maze(myRows, myCols);
 		
-//		maze.lockRoom(2, 1);
+		maze.lockRoom(2, 1);
 //		maze.lockRoom(2, 2);
 //		maze.lockRoom(2, 3);
 //		maze.lockRoom(2, 4);
@@ -33,7 +33,7 @@ public class Main {
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
 		
-		maze.move("E");
+		System.out.println("move? " + maze.move("S"));
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
 
