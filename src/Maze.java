@@ -58,19 +58,16 @@ public class Maze {
 				arr[i][j] = new Room();
 			}
 		}
-		
 		//set top and bottom all to lock
-		for(int i = 0; i < arr.length; i++) {
+		for(int i = 0; i < arr[0].length; i++) {
 			arr[0][i].lockRoom();
 			arr[arr.length-1][i].lockRoom();
 		}
-		
 		//set left and right all to lock
-		for(int j = 0; j < arr[0].length; j++) {
+		for(int j = 0; j < arr.length; j++) {
 			arr[j][0].lockRoom();
-			arr[j][arr.length-1].lockRoom();
+			arr[j][arr[0].length-1].lockRoom();
 		}
-		
 		
 		return arr;
 	}

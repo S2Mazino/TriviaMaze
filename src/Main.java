@@ -28,7 +28,7 @@ public class Main {
 			//will add valid input condition later
 			System.out.print("Input amount of rows(between 4 and 10): ");
 			myRows = myInput.nextInt();
-			System.out.print("Input amount of rows(between 4 and 10): ");
+			System.out.print("Input amount of cols(between 4 and 10): ");
 			myCols = myInput.nextInt();
 			System.out.print("Input starting row: ");
 			myX = myInput.nextInt();
@@ -36,11 +36,11 @@ public class Main {
 			myY = myInput.nextInt();
 			System.out.print("Input ending row: ");
 			myEndX = myInput.nextInt();
-			System.out.print("Input ending row: ");
+			System.out.print("Input ending col: ");
 			myEndY = myInput.nextInt();
 			
 			maze = new Maze(myRows, myCols, myX, myY, myEndX, myEndY);
-			maze = new Maze(4, 4, 0, 0, 3, 3);
+//			maze = new Maze(4, 7, 0, 0, 3, 3);
 		}else {
 			maze = new Maze();
 		}
