@@ -26,7 +26,9 @@ public class Main {
 		maze = new Maze(myRows, myCols);
 		
 //		maze.lockRoom(2, 1);
-		maze.lockRoom(1, 2);
+//		maze.lockRoom(2, 2);
+//		maze.lockRoom(2, 3);
+//		maze.lockRoom(2, 4);
 		
 		maze.displayMaze();
 		

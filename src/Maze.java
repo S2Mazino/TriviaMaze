@@ -26,8 +26,8 @@ public class Maze {
 	 * @param theEndY
 	 */
 	public Maze(final int theRow, final int theCol) {
-		myX = 2;
-		myY = 2;
+		myX = 1;
+		myY = 1;
 		myEndX = theRow;
 		myEndY = theCol;
 		myMaze = generateMaze(theRow, theCol);
@@ -91,7 +91,7 @@ public class Maze {
 	 * @param theY theCol
 	 */
 	public void lockRoom(int theX, int theY) {
-		myMaze[theY][theX].lockRoom();
+		myMaze[theX][theY].lockRoom();
 	}
 	
 	/**
@@ -172,8 +172,8 @@ public class Maze {
 	 * set all room visit = false
 	 */
 	public void resetVisit() {
-		for(int i = 0; i < myMaze.length; i++) {
-			for(int j = 0; j < myMaze[0].length; j++) {
+		for(int i = 1; i < myMaze.length-1; i++) {
+			for(int j = 1; j < myMaze[0].length-1; j++) {
 				myMaze[i][j].setVisit(false);
 			}
 		}

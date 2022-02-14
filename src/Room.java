@@ -47,7 +47,5 @@ public class Room {
 		return myY;
 	}
 	
-
-	
 }
 
