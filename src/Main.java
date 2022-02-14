@@ -31,10 +31,12 @@ public class Main {
 //		maze.lockRoom(2, 4);
 		
 		maze.displayMaze();
-		
 		System.out.println(maze.availableRoom());
-		System.out.print("Valid path? ");
-		System.out.print(maze.hasPath());
+		
+		maze.move("E");
+		maze.displayMaze();
+		System.out.println(maze.availableRoom());
+
 		
 		myInput.close();
 	}

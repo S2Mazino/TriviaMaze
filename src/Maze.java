@@ -171,7 +171,7 @@ public class Maze {
 	/**
 	 * set all room visit = false
 	 */
-	public void resetVisit() {
+	private void resetVisit() {
 		for(int i = 1; i < myMaze.length-1; i++) {
 			for(int j = 1; j < myMaze[0].length-1; j++) {
 				myMaze[i][j].setVisit(false);
@@ -179,6 +179,17 @@ public class Maze {
 		}
 	}
 	
+	public void move(String theDirection) {
+		if(theDirection.equals("N")) {
+			myX--;
+		}else if(theDirection.equals("E")) {
+			myY++;
+		}else if(theDirection.equals("S")) {
+			myX++;
+		}else if(theDirection.equals("W")) {
+			myY--;
+		}
+	}
 	
 
 }
