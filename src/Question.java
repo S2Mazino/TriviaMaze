@@ -1,3 +1,9 @@
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import org.sqlite.SQLiteDataSource;
+
 /**
  * 
  */
@@ -11,6 +17,7 @@ public class Question {
 	private String correctAnswer = "";
 	private String userAnswer = "";
 	private String[] choices = new String[4];
+	private Integer questionNumber = 1;
 
 	/**
 	 * 
@@ -66,12 +73,46 @@ public class Question {
 	 * @return A String representing the question display. 
 	 *
 	 */
-	public String Display() {
+	public String display() {
 		String display = "";
 		display += (question + "\n");
 		for(int i = 0; i < choices.length; i++) {
 			display += (choices[i] + "\n");
 		}
 		return display;
+	}
+	/**
+	 * 
+	 * @param tableName is a String representing the table name. 
+	 * @param ds is the data source. 
+	 */
+	public void createTable(String tableName, SQLiteDataSource ds) {
+		String query = "CREATE TABLE IF NOT EXISTS " + tableName + "( " + "QUESTIONNUMBER INTEGER NOT NULL, " + "QUESTION TEXT NOT NULL, " + "CHOICES TEXT NOT NULL, " + "ANSWER TEXT NOT NULL )";
+        try ( Connection conn = ds.getConnection();
+                Statement stmt = conn.createStatement(); ) {
+              stmt.executeUpdate( query );
+          } catch ( SQLException e ) {
+              e.printStackTrace();
+              System.exit( 0 );
+          }
+	}
+	/**
+	 * 
+	 * @param tableName is a String representing the table name. 
+	 * @param question is a String representing the question. 
+	 * @param choices is a comma separates String of answer choices. 
+	 * @param answer is a String representing the answer. 
+	 * @param ds is the data source. 
+	 */
+	public void addQuestion(String tableName, String question, String choices, String answer, SQLiteDataSource ds) {
+		 String query = "INSERT INTO " + tableName + " ( QUESTIONNUMBER, QUESTION, CHOICES, ANSWER ) VALUES ( '" + questionNumber + "', '" + question + "', '" + choices + "', '" + answer + "' )";
+		 questionNumber++;
+	        try ( Connection conn = ds.getConnection();
+	              Statement stmt = conn.createStatement(); ) {
+	            stmt.executeUpdate( query );
+	        } catch ( SQLException e ) {
+	            e.printStackTrace();
+	            System.exit( 0 );
+	        }
 	}
 }
