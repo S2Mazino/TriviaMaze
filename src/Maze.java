@@ -1,6 +1,8 @@
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 /**
@@ -16,18 +18,6 @@ public class Maze {
 	private int myEndY;
 	
 	/**
-	 * Constructor 4,4 when user wants to use the randomize function.
-	 */
-	public Maze() {
-		Random rand = new Random();
-		myX = rand.nextInt(4)+1;
-		myY = rand.nextInt(4)+1;
-		myEndX = rand.nextInt(4)+1;
-		myEndY = rand.nextInt(4)+1;
-		myMaze = generateMaze(4, 4);
-	}
-	
-	/**
 	 * Constructor when user wants to specify starting and ending points.
 	 * 
 	 * @param theUserX
@@ -35,11 +25,11 @@ public class Maze {
 	 * @param theEndX
 	 * @param theEndY
 	 */
-	public Maze(final int theRow, final int theCol, final int theUserX, final int theUserY, final int theEndX, final int theEndY) {
-		myX = theUserX+1;
-		myY = theUserY+1;
-		myEndX = theEndX+1;
-		myEndY = theEndY+1;
+	public Maze(final int theRow, final int theCol) {
+		myX = 1;
+		myY = 1;
+		myEndX = theRow;
+		myEndY = theCol;
 		myMaze = generateMaze(theRow, theCol);
 	}
 	
@@ -52,18 +42,19 @@ public class Maze {
 	 * @return the maze
 	 */
 	private Room[][] generateMaze(final int theRow, final int theCol){
+		//implements minesweeper +2 method
 		Room[][] arr = new Room[theRow+2][theCol+2];
 		for(int i = 0; i < arr.length; i++) {
 			for(int j = 0; j < arr[0].length; j++) {
-				arr[i][j] = new Room();
+				arr[i][j] = new Room(i, j);
 			}
 		}
-		//set top and bottom all to lock
+		//set first row and last row all to lock
 		for(int i = 0; i < arr[0].length; i++) {
 			arr[0][i].lockRoom();
 			arr[arr.length-1][i].lockRoom();
 		}
-		//set left and right all to lock
+		//set first column and last column all to lock
 		for(int j = 0; j < arr.length; j++) {
 			arr[j][0].lockRoom();
 			arr[j][arr[0].length-1].lockRoom();
@@ -112,30 +103,105 @@ public class Maze {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Returns all possible direction the user can move
+	 * @return all the available location from the user's position
 	 */
 	public String availableRoom() {
 		StringBuilder sb = new StringBuilder();
 		//Up
-		if(!myMaze[myX][myY-1].isLocked()) {
+		if(!myMaze[myX-1][myY].isLocked()) {
 			sb.append("N,");
 		}
 		//Right
-		if(!myMaze[myX+1][myY].isLocked()) {
+		if(!myMaze[myX][myY+1].isLocked()) {
 			sb.append("E,");
 		}
 		//Down
-		if(!myMaze[myX][myY+1].isLocked()) {
+		if(!myMaze[myX+1][myY].isLocked()) {
 			sb.append("S,");
 		}
 		//Left
-		if(!myMaze[myX-1][myY].isLocked()) {
+		if(!myMaze[myX][myY-1].isLocked()) {
 			sb.append("W,");
 		}
-		return sb.substring(0, sb.length()-1).toString();
+		return sb.length() == 0? sb.toString() : sb.substring(0, sb.length()-1).toString();
 	}
 	
+	/**
+	 * Checks if there is exist a valid path from current room to end room by
+	 * utilizing BFS algorithm.
+	 * @return T/F T = valid path exist, else F
+	 */
+	public boolean hasPath() {
+		
+		Queue<Room> q = new LinkedList<>();
+		//current user's position
+		q.add(myMaze[myX][myY]);
+		
+		while(q.size() != 0) {
+			Room curr = q.remove();
+			int i = curr.getX();
+			int j = curr.getY();
+			if( i <= 0 || i >= myMaze.length-1 || j <= 0 || j >= myMaze[0].length-1) {
+				continue;
+			}
+			
+			if(myMaze[i][j].getVisit() == true || myMaze[i][j].isLocked()) {
+				continue;
+			}
+			
+			if(i == myEndX && j == myEndY) {
+				return true;
+			}
+			
+			myMaze[i][j].setVisit(true);
+			
+			q.add(myMaze[i-1][j]); //left
+			q.add(myMaze[i+1][j]); //right
+			q.add(myMaze[i][j+1]); //up
+			q.add(myMaze[i][j-1]); //down
+			
+		}
+		
+		resetVisit();
+		
+		return false;
+	}
+	
+	/**
+	 * set all room visit = false
+	 */
+	private void resetVisit() {
+		for(int i = 1; i < myMaze.length-1; i++) {
+			for(int j = 1; j < myMaze[0].length-1; j++) {
+				myMaze[i][j].setVisit(false);
+			}
+		}
+	}
+	
+	/**
+	 * Moves in desired direction and return true if the move was successful,
+	 * otherwise false.
+	 * @param theDirection the desired direction to move in
+	 * @return T/F if move was successful
+	 */
+	public boolean move(String theDirection) {
+		boolean moved = false;
+		if(theDirection.equals("N") && (myX-1 > 0) && !myMaze[myX-1][myY].isLocked()) {
+			myX--;
+			moved = true;
+		}else if(theDirection.equals("E") && (myY+1 < myMaze[0].length) && !myMaze[myX][myY+1].isLocked()) {
+			myY++;
+			moved = true;
+		}else if(theDirection.equals("S") && (myX+1 < myMaze.length) && !myMaze[myX+1][myY].isLocked()) {
+			myX++;
+			moved = true;
+		}else if(theDirection.equals("W") && (myY-1 > 0) && !myMaze[myX][myY-1].isLocked()) {
+			myY--;
+			moved = true;
+		}
+		return moved;
+	}
 	
 
 }
