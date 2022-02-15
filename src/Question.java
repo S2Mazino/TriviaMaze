@@ -1,6 +1,8 @@
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import org.sqlite.SQLiteDataSource;
 
@@ -18,33 +20,34 @@ public class Question {
 	private String userAnswer = "";
 	private String[] choices = new String[4];
 	private Integer questionNumber = 1;
+	ArrayList<Integer> usedQuestions = new ArrayList<Integer>();
 
 	/**
 	 * 
 	 * Grabs a question from the database and assigns it to the question variable. 
 	 *
 	 */
-	public void getQuestion() {
-		while(question != "temporary condition" /*there is a question in the database*/) {
-			String question = "get a question from the database";
-			if(question != "temporary condition" /* question is not already been used*/) {
-				question = "get a question from the database";
-				this.question = question;
+	public void getQuestionData(String tableName, SQLiteDataSource ds) {
+		String query = "SELECT * FROM " + tableName;
+		try ( Connection conn = ds.getConnection();
+				Statement stmt = conn.createStatement(); ) {
+
+			ResultSet rs = stmt.executeQuery(query);
+			while ( rs.next() ) {
+				Integer questionNum = rs.getInt("QUESTIONNUMBER");
+				if(usedQuestions.contains(questionNum)) {
+					question = rs.getString("QUESTION");
+					correctAnswer = rs.getString("ANSWER");
+					String answerChoices = rs.getString("CHOICES");
+					choices = answerChoices.split("[,]", 0);
+				}
 			}
+			question = "There is no more questions in the dataBase. ";
+		} catch ( SQLException e ) {
+			e.printStackTrace();
+			System.exit( 0 );
 		}
-		question = "There is no more questions in the database. ";
-	}
-	/**
-	 * 
-	 * Gets the question options from the database and stores them in the choices array. 
-	 * 
-	 */
-	public void getOptions() {
 		
-	}
-	
-	public void getCorrect() {
-		correctAnswer = "get the correct answer from the database. ";
 	}
 	/**
 	 * 
