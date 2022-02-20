@@ -17,6 +17,7 @@ public class Question {
 	private String[] myChoices = new String[4];
 	private Integer myQuestionNumber = 1;
 	private ArrayList<Integer> myUsedQuestions = new ArrayList<Integer>();
+	private ArrayList<String[]> myQuestions = new ArrayList<String[]>();
 
 	/**
 	 * 
@@ -32,6 +33,12 @@ public class Question {
 	public String[] getChoices() {
 		return myChoices;
 	}
+	
+	public void printChoices() {
+		for(int i = 0; i < myChoices.length; i++) {
+			System.out.println(myChoices[i]);
+		}
+	}
 	/**
 	 * 
 	 * Grabs a question from the database and assigns it to the question variable. 
@@ -41,23 +48,71 @@ public class Question {
 		//String countQuery = "SELECT COUNT(*) FROM " + theTableName;
 		String query = "SELECT * FROM " + theTableName;
 		try ( Connection conn = theDs.getConnection();
-				Statement stmt = conn.createStatement(); ) {
+			Statement stmt = conn.createStatement(); ) {
 			ResultSet rs = stmt.executeQuery(query);
+			String[] tempArr = new String[3];
 			while ( rs.next() ) {
-				Integer questionNum = rs.getInt("QUESTIONNUMBER");
-				if(myUsedQuestions.contains(questionNum)) {
-					myQuestion = rs.getString("QUESTION");
-					myCorrectAnswer = rs.getString("ANSWER");
-					String answerChoices = rs.getString("CHOICES");
-					myChoices = answerChoices.split("[,]", 0);
-				}
+				myUsedQuestions.add(rs.getInt("QUESTIONNUMBER"));
+				tempArr[0] = rs.getString("QUESTION");
+				tempArr[1] = rs.getString("CHOICES");
+				tempArr[2] = rs.getString("ANSWER");
+				myQuestions.add(tempArr);
+//				Integer questionNum = rs.getInt("QUESTIONNUMBER");
+//				if(!myUsedQuestions.contains(questionNum)) {
+//					myUsedQuestions.add(questionNum);
+//					myQuestion = rs.getString("QUESTION");
+//					myCorrectAnswer = rs.getString("ANSWER");
+//					String answerChoices = rs.getString("CHOICES");
+//					myChoices = answerChoices.split("[,]", 0);
+//				} else {
+//					myQuestion = "There is no more questions in the dataBase. ";
+//				}
 			}
-			myQuestion = "There is no more questions in the dataBase. ";
+//			for(int i = 0; i < myQuestions.size(); i++) {
+//				int num =0; 
+//						//(int) ((Math.random() * (myQuestions.size() - 0)) + 0);
+//				if(myUsedQuestions.contains(num)) {
+//					myUsedQuestions.remove(num);
+//					myQuestion = myQuestions.get(num)[0];
+//	 				myCorrectAnswer = myQuestions.get(num)[1];
+//					String answerChoices = myQuestions.get(num)[2];
+//					myChoices = answerChoices.split("[,]", 0);
+//					myQuestions.remove(num);
+//					return;
+//				}
+//			}
+//			myQuestion = "There is no more questions in the dataBase. ";
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 			System.exit( 0 );
 		}
 		
+	}
+	
+	public void setQuestionData() {
+		System.out.println("==================================");
+		System.out.println(myUsedQuestions.size());
+		System.out.println("==================================");
+		for(int i = 0; i < myQuestions.size(); i++) {
+			Integer num = 1;
+					//(int) ((Math.random() * (myQuestions.size() - 0)) + 0); 
+			int num2 = num;
+					//(int) ((Math.random() * (myQuestions.size() - 0)) + 0);
+			if(!myQuestions.isEmpty()) {
+				if(myUsedQuestions.contains(num)) {
+					myUsedQuestions.remove(num);
+					myQuestion = myQuestions.get(num2)[0];
+					String answerChoices = myQuestions.get(num2)[1];
+					myChoices = answerChoices.split("[,]", 0);
+	 				myCorrectAnswer = myQuestions.get(num2)[2];
+					String[] temp = myQuestions.remove(num2);
+					return;
+				}
+			}
+		}
+		myQuestion = "There is no more questions in the dataBase. ";
+		myChoices[0] = "There is no more questions in the dataBase. ";
+			myCorrectAnswer = "There is no more questions in the dataBase. ";
 	}
 	/**
 	 * 
