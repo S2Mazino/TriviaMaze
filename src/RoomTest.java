@@ -23,7 +23,9 @@ class RoomTest {
 	 */
 	@BeforeEach
 	public void setUp() {
-		myRoom = new Room(2,2);
+		int x = 2;
+		int y = 2;
+		myRoom = new Room(x, y);
 	}
 
 	/**
