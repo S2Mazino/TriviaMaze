@@ -203,5 +203,19 @@ public class Maze {
 		return moved;
 	}
 	
+	/**
+	 * for testing purpose.
+	 */
+	public Room[][] getRooms(){
+		return myMaze;
+	}
+	
+	public int getMyX() {
+		return myX;
+	}
+	
+	public int getMyY() {
+		return myY;
+	}
 
 }
