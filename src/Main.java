@@ -26,9 +26,9 @@ public class Main {
 //	             conn = ds.getConnection();
 //	     		Question question = new Question();
 //	    		question.createTable("QuestionTable", ds);
-//	    		question.addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)", ds);
-//
-//	    		question.addQuestion("QuestionTable", "question2", "choice1", "choice1", ds);
+//	    		question.addQuestion("QuestionTable", "question", "choice", "choice", ds);
+//	    		question.addQuestion("QuestionTable", "question1", "choice1", "choice1", ds);
+//	    		question.addQuestion("QuestionTable", "question2", "choice2", "choice2", ds);
 //	    		question.addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)", ds);
 //	    		
 //	    		question.getQuestionData("QuestionTable", ds);
@@ -38,26 +38,36 @@ public class Main {
 //	    		System.out.println("Choices 1:");
 //	    		question.printChoices();
 //	    		System.out.println("IsCorrect: ");
-//	    		question.setChoice("choice1");
+//	    		question.setChoice("The ENIAC (Electronic Numerical Integrator and Computer)");
 //	    		System.out.println(question.isCorrect());
 //	    		System.out.println();
 //	    		question.setQuestionData();
-//	    		System.out.println("Question 1:");
+//	    		System.out.println("Question 2:");
 //	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 1:");
+//	    		System.out.println("Choices 2:");
+//	    		question.printChoices();
+//	    		System.out.println("IsCorrect: ");
+//	    		question.setChoice("choice2");
+//	    		System.out.println(question.isCorrect());
+//	    		System.out.println();
+//	    		question.setQuestionData();
+//	    		System.out.println("Question 3:");
+//	    		System.out.println(question.getQuestion());
+//	    		System.out.println("Choices 3:");
 //	    		question.printChoices();
 //	    		System.out.println("IsCorrect: ");
 //	    		question.setChoice("choice1");
 //	    		System.out.println(question.isCorrect());
 //	    		System.out.println();
 //	    		question.setQuestionData();
-//	    		System.out.println("Question 1:");
+//	    		System.out.println("Question 4:");
 //	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 1:");
+//	    		System.out.println("Choices 4:");
 //	    		question.printChoices();
 //	    		System.out.println("IsCorrect: ");
 //	    		question.setChoice("choice1");
 //	    		System.out.println(question.isCorrect());
+//	             
 //	             
 //	        } catch ( SQLException e ) {
 //	            e.printStackTrace();
