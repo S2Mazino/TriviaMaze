@@ -1,3 +1,4 @@
+import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,6 +19,7 @@ public class Question {
 	private Integer myQuestionNumber = 1;
 	private ArrayList<Integer> myUsedQuestions = new ArrayList<Integer>();
 	private ArrayList<String[]> myQuestions = new ArrayList<String[]>();
+	private Integer num;
 
 	/**
 	 * 
@@ -45,43 +47,22 @@ public class Question {
 	 *
 	 */
 	public void getQuestionData(String theTableName, SQLiteDataSource theDs) {
-		//String countQuery = "SELECT COUNT(*) FROM " + theTableName;
 		String query = "SELECT * FROM " + theTableName;
 		try ( Connection conn = theDs.getConnection();
 			Statement stmt = conn.createStatement(); ) {
+			
+			
 			ResultSet rs = stmt.executeQuery(query);
-			String[] tempArr = new String[3];
 			while ( rs.next() ) {
+				String[] tempArr = new String[3];
 				myUsedQuestions.add(rs.getInt("QUESTIONNUMBER"));
 				tempArr[0] = rs.getString("QUESTION");
 				tempArr[1] = rs.getString("CHOICES");
 				tempArr[2] = rs.getString("ANSWER");
 				myQuestions.add(tempArr);
-//				Integer questionNum = rs.getInt("QUESTIONNUMBER");
-//				if(!myUsedQuestions.contains(questionNum)) {
-//					myUsedQuestions.add(questionNum);
-//					myQuestion = rs.getString("QUESTION");
-//					myCorrectAnswer = rs.getString("ANSWER");
-//					String answerChoices = rs.getString("CHOICES");
-//					myChoices = answerChoices.split("[,]", 0);
-//				} else {
-//					myQuestion = "There is no more questions in the dataBase. ";
-//				}
 			}
-//			for(int i = 0; i < myQuestions.size(); i++) {
-//				int num =0; 
-//						//(int) ((Math.random() * (myQuestions.size() - 0)) + 0);
-//				if(myUsedQuestions.contains(num)) {
-//					myUsedQuestions.remove(num);
-//					myQuestion = myQuestions.get(num)[0];
-//	 				myCorrectAnswer = myQuestions.get(num)[1];
-//					String answerChoices = myQuestions.get(num)[2];
-//					myChoices = answerChoices.split("[,]", 0);
-//					myQuestions.remove(num);
-//					return;
-//				}
-//			}
-//			myQuestion = "There is no more questions in the dataBase. ";
+			num = myQuestions.size() - 1;
+
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 			System.exit( 0 );
@@ -91,13 +72,11 @@ public class Question {
 	
 	public void setQuestionData() {
 		System.out.println("==================================");
-		System.out.println(myUsedQuestions.size());
+		System.out.println(myQuestions.size());
 		System.out.println("==================================");
 		for(int i = 0; i < myQuestions.size(); i++) {
-			Integer num = 1;
-					//(int) ((Math.random() * (myQuestions.size() - 0)) + 0); 
+			System.out.println("-------------  " + num);
 			int num2 = num;
-					//(int) ((Math.random() * (myQuestions.size() - 0)) + 0);
 			if(!myQuestions.isEmpty()) {
 				if(myUsedQuestions.contains(num)) {
 					myUsedQuestions.remove(num);
@@ -106,6 +85,7 @@ public class Question {
 					myChoices = answerChoices.split("[,]", 0);
 	 				myCorrectAnswer = myQuestions.get(num2)[2];
 					String[] temp = myQuestions.remove(num2);
+					num = num - 1;
 					return;
 				}
 			}
