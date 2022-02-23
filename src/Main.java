@@ -71,6 +71,24 @@ public class Main {
 			else if (myInput.nextInt() == 3) {
 				//This is where a series of instructions are printed onto the console
 				//before sending you back to the main menu options.
+				System.out.println("To play the Trivia Maze, you can select a New Game" +
+						" to start a new game file and start playing the maze.");
+				System.out.println("The first number you enter when starting a new game" +
+						"determines the number of rows your maze has.");
+				System.out.println("The second number you enter when starting a new game" +
+						"determines the number of columns your maze has.");
+				System.out.println("The Trivia Maze will be created based on the parameters" +
+						"And the goal is the reach the End Room to wind the game!");
+				System.out.println("Press Enter to continue.");
+				if (myInput.next() == " ") {
+					System.out.println("The starting point is located at the top-right corner.");
+					System.out.println("The exit is located at the farthest bottom-left corner.");
+					System.out.println("You are represented by the 'u' avatar! You can move this " +
+										"avatar through doors.");
+					System.out.println("Press the N key for moving up, press the S key to move down.");
+					System.out.println("Press the E key for moving left, press the W key to move right.");
+					System.out.println("Press Enter to continue. Press B to go back to the previous page.");
+				}
 			}
 			
 			else if (myInput.nextInt() == 4) {
