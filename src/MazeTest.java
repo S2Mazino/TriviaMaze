@@ -27,20 +27,13 @@ class MazeTest {
 	}
 
 	/**
+	 * Testing successful object creation.
 	 * Test method for {@link Maze#Maze(int, int)}.
 	 */
 	@Test
 	void testMaze() {
 		//checking if the object I created is not null
 		assertNotNull("The object is null", myMaze);
-	}
-
-	/**
-	 * Test method for {@link Maze#displayMaze()}.
-	 */
-	@Test
-	void testDisplayMaze() {
-		fail("Not yet implemented"); // TODO
 	}
 
 	/**
@@ -84,14 +77,16 @@ class MazeTest {
 	}
 
 	/**
+	 * Should return false because user's position is not on exit's position.
 	 * Test method for {@link Maze#win()}.
 	 */
 	@Test
 	void testWinFail() {
-		assertFalse("Win function fail to lose", myMaze.win());
+		assertFalse("Win function fail to return false", myMaze.win());
 	}
 	
 	/**
+	 * Should return true because user's position is on exit's position.
 	 * Test method for {@link Maze#win()}.
 	 */
 	@Test
@@ -107,22 +102,65 @@ class MazeTest {
 	}
 
 	/**
+	 * Testing default starting path, open path would be E, S
+	 * Test method for {@link Maze#availableRoom()}.
+	 */
+	@Test
+	void testAvailableRoomStart() {
+		String paths = myMaze.availableRoom();
+		assertTrue("availableRoom did not return correct rooms", paths.contains("E"));
+		assertTrue("availableRoom did not return correct rooms", paths.contains("S"));
+	}
+	
+	/**
+	 * Testing paths from (2,2), open path would be N, E, S, W
 	 * Test method for {@link Maze#availableRoom()}.
 	 */
 	@Test
 	void testAvailableRoom() {
-		fail("Not yet implemented"); // TODO
+		myMaze.move("E");
+		myMaze.move("S");
+		String paths = myMaze.availableRoom();
+		assertTrue("availableRoom did not return correct rooms", paths.contains("E"));
+		assertTrue("availableRoom did not return correct rooms", paths.contains("S"));
+		assertTrue("availableRoom did not return correct rooms", paths.contains("N"));
+		assertTrue("availableRoom did not return correct rooms", paths.contains("W"));
+	}
+	
+	/**
+	 * Testing available paths when all room are blocked
+	 * Test method for {@link Maze#availableRoom()}.
+	 */
+	@Test
+	void testNoAvailableRoom() {
+		myMaze.lockRoom(myMaze.getMyX(), myMaze.getMyY()+1);
+		myMaze.lockRoom(myMaze.getMyX()+1, myMaze.getMyY());
+		String paths = myMaze.availableRoom();
+		assertEquals("availableRoom did not return correct rooms", paths.length(), 0);
 	}
 
 	/**
+	 * Default path testing from start to finish
 	 * Test method for {@link Maze#hasPath()}.
 	 */
 	@Test
 	void testHasPath() {
-		fail("Not yet implemented"); // TODO
+		assertTrue("Path aglorithm not working properly", myMaze.hasPath());
+	}
+	
+	/**
+	 * Blocked all path (blocked east and south path) from the starting point.
+	 * Test method for {@link Maze#hasPath()}.
+	 */
+	@Test
+	void testHasNoPath() {
+		myMaze.lockRoom(myMaze.getMyX(), myMaze.getMyY()+1);
+		myMaze.lockRoom(myMaze.getMyX()+1, myMaze.getMyY());
+		assertFalse("Path aglorithm not working properly", myMaze.hasPath());
 	}
 
 	/**
+	 * Testing move south.
 	 * Test method for {@link Maze#move(java.lang.String)}.
 	 */
 	@Test
@@ -134,6 +172,7 @@ class MazeTest {
 	}
 	
 	/**
+	 * Testing move north.
 	 * Test method for {@link Maze#move(java.lang.String)}.
 	 */
 	@Test
@@ -147,6 +186,7 @@ class MazeTest {
 	}
 	
 	/**
+	 * Testing move east.
 	 * Test method for {@link Maze#move(java.lang.String)}.
 	 */
 	@Test
@@ -158,6 +198,7 @@ class MazeTest {
 	}
 	
 	/**
+	 * Testing move west.
 	 * Test method for {@link Maze#move(java.lang.String)}.
 	 */
 	@Test
