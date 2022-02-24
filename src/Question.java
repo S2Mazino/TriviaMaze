@@ -27,6 +27,7 @@ public class Question {
 	 * @return the question to be displayed. 
 	 */
 	public String getQuestion() {
+		setQuestionData();
 		return myQuestion;
 	}
 	/**
@@ -74,7 +75,7 @@ public class Question {
 	/**
 	 * Picks a question and sets the data for that question. 
 	 */
-	public void setQuestionData() {
+	private void setQuestionData() {
 		for(int i = 0; i < myQuestions.size(); i++) {
 			int num2 = num;
 			if(!myQuestions.isEmpty()) {
