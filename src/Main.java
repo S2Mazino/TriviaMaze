@@ -46,10 +46,17 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		final Scanner myInput = new Scanner(System.in);
+		String response;
 		Maze maze = null;
 		int myRows;
 		int myCols;
+		final String NEWGAMESELECT = "1";
+		final String LOADGAMESELECT = "2";
+		final String HELPSELECT = "3";
+		final String CHEATSELECT = "4";
+		final String EXITGAME = "5";
 		boolean myGameDone = false;
+		
 		
 		while (!myGameDone) {
 			System.out.println("Hello, welcome to the Trivia Maze, please type in" +
@@ -60,42 +67,65 @@ public class Main {
 			System.out.println("4. Cheats Menu");
 			System.out.println("5. Exit");
 			
-			if (myInput.nextInt() == 1) {
+			response = myInput.next();
+			if (response == NEWGAMESELECT) {
 				//put the original main code here or call a helper method that does that
+				System.out.print("Input amount of rows(between 4 and 10): ");
+				myRows = myInput.nextInt();
+				System.out.print("Input amount of cols(between 4 and 10): ");
+				myCols = myInput.nextInt();
+				maze = new Maze(myRows, myCols);
+				while (!maze.win()) {
+					maze.displayMaze();
+					System.out.println(maze.availableRoom());
+					
+					System.out.println("move? " + maze.move("S"));
+					maze.displayMaze();
+					System.out.println(maze.availableRoom());
+					response = myInput.next();
+					maze.move(response);
+				}
 			}
 			
-			else if (myInput.nextInt() == 2) {
+			else if (response == LOADGAMESELECT) {
 				//loading and saving games are not implemented yet.
 			}
 			
-			else if (myInput.nextInt() == 3) {
+			else if (response == HELPSELECT) {
 				//This is where a series of instructions are printed onto the console
 				//before sending you back to the main menu options.
-				displayOpeningInstr();
-				System.out.println("Press N to continue.");
-				if (myInput.next() == "N") {
-					displayPlayerInstr();
-					System.out.println("Press N to continue. Press B to go back to the previous page.");
-					if (myInput.next() == "N") {
-						displayDoorInstr();
-						System.out.println("Press N to continue. Press B to go back to the previous page.");
-						if (myInput.next() == "N") {
-							displaySaveLoadInstr();
-							System.out.println("Press N to go back to the main menu. Press B to go back to the previous page.");
-							if (myInput.next() == "N") {
-								//get out of this loop
+				boolean helpmenudone = false;
+				while (!helpmenudone) {
+					displayOpeningInstr();
+					response = myInput.next();
+					System.out.println("Press N to continue.");
+					if (response == "N") {
+						displayPlayerInstr();
+						System.out.println("Press N to continue.");
+						response = myInput.next();
+						if (response == "N") {
+							displayDoorInstr();
+							System.out.println("Press N to continue.");
+							response = myInput.next();
+							if (response == "N") {
+								displaySaveLoadInstr();
+								System.out.println("Press N to go back to the main menu.");
+								response = myInput.next();
+								if (response == "N") {
+									helpmenudone = true;
+								}
 							}
 						}
 					}
 				}
 			}
 			
-			else if (myInput.nextInt() == 4) {
+			else if (response == CHEATSELECT) {
 				//This is where a text-based cheats menu would be
 				System.out.println("You picked the cheats menu when there's nothing here!");
 			}
 			
-			else if (myInput.nextInt() == 5) {
+			else if (response == EXITGAME) {
 				myGameDone = true;
 			}
 			
