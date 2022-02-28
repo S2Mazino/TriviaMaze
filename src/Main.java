@@ -48,6 +48,7 @@ public class Main {
 		final Scanner myInput = new Scanner(System.in);
 		String response;
 		Maze maze = null;
+		Question question;
 		int myRows;
 		int myCols;
 		final String NEWGAMESELECT = "1";
@@ -84,6 +85,16 @@ public class Main {
 					System.out.println(maze.availableRoom());
 					response = myInput.next();
 					maze.move(response);
+					if (maze.hasPath()) {
+						//question.getQuestionData(tableName, ds);
+						question.display();
+						response = myInput.next();
+						question.setChoice(response);
+						if (!question.isCorrect()) {
+							//maze.lockRoom(theX, theY);
+						}
+					}
+					
 				}
 			}
 			
