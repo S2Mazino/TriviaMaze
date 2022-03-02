@@ -10,25 +10,24 @@ import java.util.Queue;
 public class Maze {
 	//fields
 	private Room[][] myMaze;
-	private int myX; //columns
-	private int myY; //rows
-	private int myEndX;
-	private int myEndY;
+	private int myCol;
+	private int myRow;
+	private int myEndCol;
+	private int myEndRow;
 	
 	
 	/**
 	 * Constructor when user wants to specify starting and ending points.
 	 * 
-	 * @param theUserX
-	 * @param theUserY
-	 * @param theEndX
-	 * @param theEndY
+
+	 * @param theEndCol
+	 * @param theEndRow
 	 */
 	public Maze(final int theRow, final int theCol) {
-		myX = 1;
-		myY = 1;
-		myEndX = theCol;
-		myEndY = theRow;
+		myCol = 1;
+		myRow = 1;
+		myEndCol = theCol;
+		myEndRow = theRow;
 		generateMaze(theRow, theCol);
 	}
 	
@@ -69,9 +68,9 @@ public class Maze {
 	public void displayMaze() {
 		for(int i = 1; i < myMaze.length-1; i++) {
 			for(int j = 1; j < myMaze[0].length-1; j++) {
-				if(i == myX && j == myY) {
+				if(i == myRow && j == myCol) {
 					System.out.print("u");
-				}else if(i == myEndX && j == myEndY){
+				}else if(i == myEndRow && j == myEndCol){
 					System.out.print("e");
 				}else if(!myMaze[i][j].isLocked()) {
 					System.out.print("o");
@@ -97,7 +96,7 @@ public class Maze {
 	 * @return T/F if user's x and y is equal to the end's x and y
 	 */
 	public boolean win() {
-		return myX == myEndX && myY == myEndY;
+		return myRow == myEndRow && myCol == myEndCol;
 	}
 	
 	/**
@@ -107,19 +106,19 @@ public class Maze {
 	public String availableRoom() {
 		StringBuilder sb = new StringBuilder();
 		//Up
-		if(!myMaze[myY-1][myX].isLocked()) {
+		if(!myMaze[myRow-1][myCol].isLocked()) {
 			sb.append("N,");
 		}
 		//Right
-		if(!myMaze[myY][myX+1].isLocked()) {
+		if(!myMaze[myRow][myCol+1].isLocked()) {
 			sb.append("E,");
 		}
 		//Down
-		if(!myMaze[myY+1][myX].isLocked()) {
+		if(!myMaze[myRow+1][myCol].isLocked()) {
 			sb.append("S,");
 		}
 		//Left
-		if(!myMaze[myY][myX-1].isLocked()) {
+		if(!myMaze[myRow][myCol-1].isLocked()) {
 			sb.append("W,");
 		}
 		return sb.length() == 0? sb.toString() : sb.substring(0, sb.length()-1).toString();
@@ -134,14 +133,14 @@ public class Maze {
 		
 		Queue<Room> q = new LinkedList<>();
 		//current user's position
-		q.add(myMaze[myY][myX]);
+		q.add(myMaze[myRow][myCol]);
 		
 		while(q.size() != 0) {
 			Room curr = q.remove();
 			int i = curr.getY();
 			int j = curr.getX();
 			
-			if(i == myEndY && j == myEndX) {
+			if(i == myEndRow && j == myEndCol) {
 				return true;
 			}
 			
@@ -189,17 +188,17 @@ public class Maze {
 	 */
 	public boolean move(final String theDirection) {
 		boolean moved = false;
-		if(theDirection.equals("N") && (myY-1 > 0) && !myMaze[myY-1][myX].isLocked()) {
-			myY--;
+		if(theDirection.equals("N") && (myRow-1 > 0) && !myMaze[myRow-1][myCol].isLocked()) {
+			myRow--;
 			moved = true;
-		}else if(theDirection.equals("E") && (myX+1 < myMaze[0].length) && !myMaze[myY][myX+1].isLocked()) {
-			myX++;
+		}else if(theDirection.equals("E") && (myCol+1 < myMaze[0].length) && !myMaze[myRow][myCol+1].isLocked()) {
+			myCol++;
 			moved = true;
-		}else if(theDirection.equals("S") && (myY+1 < myMaze.length) && !myMaze[myY+1][myX].isLocked()) {
-			myY++;
+		}else if(theDirection.equals("S") && (myRow+1 < myMaze.length) && !myMaze[myRow+1][myCol].isLocked()) {
+			myRow++;
 			moved = true;
-		}else if(theDirection.equals("W") && (myX-1 > 0) && !myMaze[myY][myX-1].isLocked()) {
-			myX--;
+		}else if(theDirection.equals("W") && (myCol-1 > 0) && !myMaze[myRow][myCol-1].isLocked()) {
+			myCol--;
 			moved = true;
 		}
 		return moved;
@@ -212,12 +211,12 @@ public class Maze {
 		return myMaze;
 	}
 	
-	public int getMyX() {
-		return myX;
+	public int getMyCol() {
+		return myCol;
 	}
 	
-	public int getMyY() {
-		return myY;
+	public int getMyRow() {
+		return myRow;
 	}
 
 }

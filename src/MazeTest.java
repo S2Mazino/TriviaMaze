@@ -134,8 +134,8 @@ class MazeTest {
 	 */
 	@Test
 	void testNoAvailableRoom() {
-		myMaze.lockRoom(myMaze.getMyX(), myMaze.getMyY()+1);
-		myMaze.lockRoom(myMaze.getMyX()+1, myMaze.getMyY());
+		myMaze.lockRoom(myMaze.getMyCol(), myMaze.getMyRow()+1);
+		myMaze.lockRoom(myMaze.getMyCol()+1, myMaze.getMyRow());
 		String paths = myMaze.availableRoom();
 		assertEquals("availableRoom did not return correct rooms", paths.length(), 0);
 	}
@@ -157,8 +157,8 @@ class MazeTest {
 	void testHasPathTrue() {
 		myMaze.move("S");
 		myMaze.move("E");
-		myMaze.lockRoom(myMaze.getMyX()-1, myMaze.getMyY());
-		myMaze.lockRoom(myMaze.getMyX(), myMaze.getMyY()+1);
+		myMaze.lockRoom(myMaze.getMyCol()-1, myMaze.getMyRow());
+		myMaze.lockRoom(myMaze.getMyCol(), myMaze.getMyRow()+1);
 		assertTrue("Path aglorithm not working properly", myMaze.hasPath());
 	}
 	
@@ -168,8 +168,8 @@ class MazeTest {
 	 */
 	@Test
 	void testHasNoPath() {
-		myMaze.lockRoom(myMaze.getMyX(), myMaze.getMyY()+1);
-		myMaze.lockRoom(myMaze.getMyX()+1, myMaze.getMyY());
+		myMaze.lockRoom(myMaze.getMyCol(), myMaze.getMyRow()+1);
+		myMaze.lockRoom(myMaze.getMyCol()+1, myMaze.getMyRow());
 		assertFalse("Path aglorithm not working properly", myMaze.hasPath());
 	}
 	
@@ -181,10 +181,10 @@ class MazeTest {
 	 */
 	@Test
 	void testMoveSouth() {
-		assertEquals("col- position not at top-left of maze", myMaze.getMyX(), 1);
-		assertEquals("row- position not at top-left of maze", myMaze.getMyY(), 1);
+		assertEquals("col- position not at top-left of maze", myMaze.getMyCol(), 1);
+		assertEquals("row- position not at top-left of maze", myMaze.getMyRow(), 1);
 		myMaze.move("S");
-		assertEquals("Function failed to move south", myMaze.getMyY(), 2);
+		assertEquals("Function failed to move south", myMaze.getMyRow(), 2);
 	}
 	
 	/**
@@ -195,10 +195,10 @@ class MazeTest {
 	void testMoveNorth() {
 		myMaze.move("S");
 		myMaze.move("E");
-		assertEquals("col- position not at 2", myMaze.getMyX(), 2);
-		assertEquals("row- position not at 2", myMaze.getMyY(), 2);
+		assertEquals("col- position not at 2", myMaze.getMyCol(), 2);
+		assertEquals("row- position not at 2", myMaze.getMyRow(), 2);
 		myMaze.move("N");
-		assertEquals("Function failed to move north", myMaze.getMyY(), 1);
+		assertEquals("Function failed to move north", myMaze.getMyRow(), 1);
 	}
 	
 	/**
@@ -207,10 +207,10 @@ class MazeTest {
 	 */
 	@Test
 	void testMoveEast() {
-		assertEquals("col- position not at top-left of maze", myMaze.getMyX(), 1);
-		assertEquals("row- position not at top-left of maze", myMaze.getMyY(), 1);
+		assertEquals("col- position not at top-left of maze", myMaze.getMyCol(), 1);
+		assertEquals("row- position not at top-left of maze", myMaze.getMyRow(), 1);
 		myMaze.move("E");
-		assertEquals("Function failed to move east", myMaze.getMyX(), 2);
+		assertEquals("Function failed to move east", myMaze.getMyCol(), 2);
 	}
 	
 	/**
@@ -221,10 +221,10 @@ class MazeTest {
 	void testMoveWest() {
 		myMaze.move("S");
 		myMaze.move("E");
-		assertEquals("col- position not at 2", myMaze.getMyX(), 2);
-		assertEquals("row- position not at 2", myMaze.getMyY(), 2);
+		assertEquals("col- position not at 2", myMaze.getMyCol(), 2);
+		assertEquals("row- position not at 2", myMaze.getMyRow(), 2);
 		myMaze.move("W");
-		assertEquals("Function failed to move west", myMaze.getMyX(), 1);
+		assertEquals("Function failed to move west", myMaze.getMyCol(), 1);
 	}
 
 }
