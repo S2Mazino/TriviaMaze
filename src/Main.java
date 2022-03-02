@@ -1,11 +1,23 @@
 
+<<<<<<< Updated upstream
 import java.util.Scanner;
 
+=======
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+import org.sqlite.SQLiteDataSource;
+>>>>>>> Stashed changes
 /**
  * @author Nordine
  *
  */
-public class Main {
+public class Main implements Serializable{
 
 	/**
 	 * @param args
@@ -37,7 +49,29 @@ public class Main {
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
 
-		
+
+		Main serilizedObjectOfmainClass=new Main();
+		//serilization of an object
+		try
+        {   
+            //Saving of object in a file
+            FileOutputStream file = new FileOutputStream("serilizedObjectOfmainClass.ser");
+            ObjectOutputStream out = new ObjectOutputStream(file);
+              
+            // Method for serialization of object
+            out.writeObject(serilizedObjectOfmainClass);
+              
+            out.close();
+            file.close();
+              
+            System.out.println("Object has been serialized");
+  
+        }
+          
+        catch(IOException ex)
+        {
+            System.out.println("IOException is caught");
+        }
 		myInput.close();
 	}
 
