@@ -1,10 +1,8 @@
 package Maze;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import org.sqlite.SQLiteDataSource;
 
 /**
  * @author Nordine
@@ -14,10 +12,10 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws SQLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		//=============================================================================================
-		// I am running in to a problem where I am trying to print the different questions but it is only printing the last question. It is a mess now but I will fix it when I solve the problem. 
 		//Adding questions
 //		SQLiteDataSource ds = null;
 //		Connection conn = null;
@@ -26,50 +24,41 @@ public class Main {
 //	            ds.setUrl("jdbc:sqlite:triviaMaze.db");
 //	             conn = ds.getConnection();
 //	     		Question question = new Question();
-//	    		question.createTable("QuestionTable", ds);
-//	    		question.addQuestion("QuestionTable", "question", "choice", "choice", ds);
-//	    		question.addQuestion("QuestionTable", "question1", "choice1", "choice1", ds);
-//	    		question.addQuestion("QuestionTable", "question2", "choice2", "choice2", ds);
-//	    		question.addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)", ds);
-//	    		
-//	    		question.getQuestionData("QuestionTable", ds);
-//	    		question.setQuestionData();
-//	    		System.out.println("Question 1:");
-//	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 1:");
-//	    		question.printChoices();
-//	    		System.out.println("IsCorrect: ");
-//	    		question.setChoice("The ENIAC (Electronic Numerical Integrator and Computer)");
-//	    		System.out.println(question.isCorrect());
-//	    		System.out.println();
-//	    		question.setQuestionData();
-//	    		System.out.println("Question 2:");
-//	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 2:");
-//	    		question.printChoices();
-//	    		System.out.println("IsCorrect: ");
-//	    		question.setChoice("choice2");
-//	    		System.out.println(question.isCorrect());
-//	    		System.out.println();
-//	    		question.setQuestionData();
-//	    		System.out.println("Question 3:");
-//	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 3:");
-//	    		question.printChoices();
-//	    		System.out.println("IsCorrect: ");
-//	    		question.setChoice("choice1");
-//	    		System.out.println(question.isCorrect());
-//	    		System.out.println();
-//	    		question.setQuestionData();
-//	    		System.out.println("Question 4:");
-//	    		System.out.println(question.getQuestion());
-//	    		System.out.println("Choices 4:");
-//	    		question.printChoices();
-//	    		System.out.println("IsCorrect: ");
-//	    		question.setChoice("choice1");
-//	    		System.out.println(question.isCorrect());
-//	             
-//	             
+	     		QuestionDatabaseService util = new QuestionDatabaseService();
+	     		util.gameStartUp();
+
+	     		Question question = new Question();
+//	     		util.getQuestionData();
+	    		question.setQuestionData();
+	    		System.out.println("Question 1:");
+	    		System.out.println(question.getQuestion());
+	    		System.out.println("Choices 1:");
+	    		question.printChoices();
+	    		System.out.println("IsCorrect: ");
+	    		question.setChoice("The ENIAC (Electronic Numerical Integrator and Computer)");
+	    		System.out.println(question.isCorrect());
+	    		System.out.println();
+
+	    		question.setQuestionData();
+	    		System.out.println("Question 2:");
+	    		System.out.println(question.getQuestion());
+	    		System.out.println("Choices 2:");
+	    		question.printChoices();
+	    		System.out.println("IsCorrect: ");
+	    		question.setChoice("1995");
+	    		System.out.println(question.isCorrect());
+	    		System.out.println();
+
+	    		question.setQuestionData();
+	    		System.out.println("Question 3:");
+	    		System.out.println(question.getQuestion());
+	    		System.out.println("Choices 3:");
+	    		question.printChoices();
+	    		System.out.println("IsCorrect: ");
+	    		question.setChoice("George Forsythe");
+	    		System.out.println(question.isCorrect());
+	    		System.out.println();           
+	             
 //	        } catch ( SQLException e ) {
 //	            e.printStackTrace();
 //	            System.exit(0);
