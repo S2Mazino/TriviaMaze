@@ -181,27 +181,40 @@ public class Maze {
 	}
 	
 	/**
-	 * Moves in desired direction and return true if the move was successful,
-	 * otherwise false.
+	 * Moves in desired direction 
 	 * @param theDirection the desired direction to move in
-	 * @return T/F if move was successful
 	 */
-	public boolean move(final String theDirection) {
+	public void move(final String theDirection) {
 		boolean moved = false;
-		if(theDirection.equals("N") && (myRow-1 > 0) && !myMaze[myRow-1][myCol].isLocked()) {
+		if(theDirection.equals("N")) {
 			myRow--;
-			moved = true;
-		}else if(theDirection.equals("E") && (myCol+1 < myMaze[0].length) && !myMaze[myRow][myCol+1].isLocked()) {
+		}else if(theDirection.equals("E")) {
 			myCol++;
-			moved = true;
-		}else if(theDirection.equals("S") && (myRow+1 < myMaze.length) && !myMaze[myRow+1][myCol].isLocked()) {
+		}else if(theDirection.equals("S")) {
 			myRow++;
-			moved = true;
-		}else if(theDirection.equals("W") && (myCol-1 > 0) && !myMaze[myRow][myCol-1].isLocked()) {
+		}else if(theDirection.equals("W")) {
 			myCol--;
-			moved = true;
 		}
-		return moved;
+	}
+	
+	/**
+	 * Checks if the player can move in the desired direction, returns true if successful
+	 * otherwise false.
+	 * @param theDirection N,E,S,W 
+	 * @return T/F if can move 
+	 */
+	public boolean canMove(final String theDirection) {
+		boolean move = false;
+		if(theDirection.equals("N") && (myRow-1 > 0) && !myMaze[myRow-1][myCol].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("E") && (myCol+1 < myMaze[0].length) && !myMaze[myRow][myCol+1].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("S") && (myRow+1 < myMaze.length) && !myMaze[myRow+1][myCol].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("W") && (myCol-1 > 0) && !myMaze[myRow][myCol-1].isLocked()) {
+			move = true;
+		}
+		return move;
 	}
 	
 	/**
