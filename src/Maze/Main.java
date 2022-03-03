@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 
 /**
- * @author Nordine
+ * @author Nordine, David, Boda, Brianna
  *
  */
 public class Main {
