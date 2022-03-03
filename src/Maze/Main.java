@@ -104,7 +104,12 @@ public class Main {
 		//move
 		//if not, tell them wrong answer lock the room and ask for another direction
 		//if no more room, lost the game
-		System.out.println("move? " + maze.move("S"));
+		
+		System.out.println("move? " + maze.canMove("S"));
+		if(maze.canMove("S")) {
+			maze.move("S");
+		}
+		
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
 

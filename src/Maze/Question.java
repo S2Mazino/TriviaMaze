@@ -1,10 +1,7 @@
-<<<<<<< HEAD:src/Maze/Question.java
+
 package Maze;
 import java.sql.Connection;
 import java.sql.ResultSet;
-=======
-package triviaMaze;
->>>>>>> main:src/Question.java
 import java.sql.SQLException;
 
 /**

@@ -186,7 +186,6 @@ public class Maze {
 	 * @param theDirection the desired direction to move in
 	 */
 	public void move(final String theDirection) {
-		boolean moved = false;
 		if(theDirection.equals("N")) {
 			myRow--;
 		}else if(theDirection.equals("E")) {
