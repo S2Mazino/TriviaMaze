@@ -19,6 +19,7 @@ public class Maze {
 	/**
 	 * Constructor when user wants to specify starting and ending points.
 	 * 
+
 	 * @param theEndCol
 	 * @param theEndRow
 	 */
