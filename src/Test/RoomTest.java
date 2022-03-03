@@ -1,8 +1,11 @@
+package Test;
 
 import static org.junit.Assert.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import Maze.Room;
 
 
 /**

@@ -1,10 +1,11 @@
+package Maze;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 
 /**
- * @author Nordine
+ * @author Nordine, David, Boda, Brianna
  *
  */
 public class Main {
