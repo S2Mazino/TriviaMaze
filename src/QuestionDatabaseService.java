@@ -1,28 +1,48 @@
+package triviaMaze;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.sqlite.SQLiteDataSource;
 
-public class QuestionsUtil {
 
-	private ArrayList<Integer> myUsedQuestions = new ArrayList<Integer>();
-	private ArrayList<String[]> myQuestions = new ArrayList<String[]>();
+public class QuestionDatabaseService {
+
+	private List<Integer> myUsedQuestions = new ArrayList<Integer>();
+	private List<String[]> myQuestions = new ArrayList<String[]>();
 	private Integer myQuestionNumber = 0;
 	private Integer num;
 	private SQLiteDataSource ds = null;
 	private Connection conn = null;
 
-	public QuestionsUtil() {
+	enum ColumnName {
+		COL1("QUESTION"),
+		COL2("CHOICES"),
+		COL3("ANSWER");
+		String name;
+		ColumnName(String name){
+			this.name = name;
+		}
+	}
+
+	public QuestionDatabaseService() {
 		try {
 			ds = new SQLiteDataSource();
 			ds.setUrl("jdbc:sqlite:triviaMaze.db");
 			conn = ds.getConnection();
 		} catch ( SQLException e ) {
 			e.printStackTrace();
-			System.exit(0);
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
@@ -51,26 +71,43 @@ public class QuestionsUtil {
 	 * @param theTableName String representing the table name. 
 	 * @param theDs the SQLiteDataSource. 
 	 */
-	public void getQuestionData() {
+	public void getQuestionDataFromDatabase() {
 		String query = "SELECT * FROM QuestionTable";
 		try ( Connection conn = ds.getConnection();
 				Statement stmt = conn.createStatement(); ) {			
 			ResultSet rs = stmt.executeQuery(query);
-			while ( rs.next() ) {
+			while ( rs.next() ) { 
 				String[] tempArr = new String[3];
 				myUsedQuestions.add(rs.getInt("QUESTIONNUMBER"));
-				tempArr[0] = rs.getString("QUESTION");
-				tempArr[1] = rs.getString("CHOICES");
-				tempArr[2] = rs.getString("ANSWER");
+				int i = 0;
+				for (ColumnName col : ColumnName.values()) {
+					tempArr[i] = rs.getString(col.name);
+		            i++;
+		        }
 				myQuestions.add(tempArr);
 			}
 			num = myQuestions.size() - 1;
-
 		} catch ( SQLException e ) {
 			e.printStackTrace();
-			System.exit( 0 );
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
+	}
+	public void gameStartUp() {
+		createTable("QuestionTable");
+ 		addQuestion("QuestionTable", "True or false, all programming languages become assemly code when compiled.", "True,False", "False");
+ 		addQuestion("QuestionTable", "What was the first commercially available computer programming language?", "FORTRAN,Java,C,LISP", "FORTRAN");
+ 		addQuestion("QuestionTable", "True or false, Python was released before Java.", "True,False", "True");
+ 		addQuestion("QuestionTable", "Who first coined the term Computer scientist?", "Steve Jobs,George Forsythe,Howard Aiken,Charles Bachman", "George Forsythe");
+ 		addQuestion("QuestionTable", "When was Java initially released?", "2004,1991,2000,1995", "1995");
+ 		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)");
 	}
 	/**
 	 * Creates a Question table with the given table name. 
@@ -79,13 +116,20 @@ public class QuestionsUtil {
 	 * @param theDs is the data source. 
 	 */
 	public void createTable(String theTableName) {
-		String query = "CREATE TABLE IF NOT EXISTS " + theTableName + "( " + "QUESTIONNUMBER INTEGER NOT NULL, " + "QUESTION TEXT NOT NULL, " + "CHOICES TEXT NOT NULL, " + "ANSWER TEXT NOT NULL )";
+		String query = "CREATE TABLE IF NOT EXISTS " + theTableName + "( " + "QUESTIONNUMBER INTEGER NOT NULL, " + ColumnName.COL1.name + " TEXT NOT NULL, " + ColumnName.COL2.name + " TEXT NOT NULL, " +  ColumnName.COL3.name + " TEXT NOT NULL )";
 		try ( Connection conn = ds.getConnection();
 				Statement stmt = conn.createStatement(); ) {
 			stmt.executeUpdate( query );
 		} catch ( SQLException e ) {
 			e.printStackTrace();
-			System.exit( 0 );
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	/**
@@ -98,7 +142,7 @@ public class QuestionsUtil {
 	 * @param theDs is the data source. 
 	 */
 	public void addQuestion(String theTableName, String theQuestion, String theChoices, String theAnswer) {
-		String query = "INSERT INTO " + theTableName + " ( QUESTIONNUMBER, QUESTION, CHOICES, ANSWER ) VALUES ( '" + myQuestionNumber + "', '" + theQuestion + "', '" + theChoices + "', '" + theAnswer + "' )";
+		String query = "INSERT INTO " + theTableName + " ( QUESTIONNUMBER, " + ColumnName.COL1.name + ", " + ColumnName.COL2.name + ", " + ColumnName.COL3.name + " ) VALUES ( '" + myQuestionNumber + "', '" + theQuestion + "', '" + theChoices + "', '" + theAnswer + "' )";
 		myQuestionNumber++;
 		try ( Connection conn = ds.getConnection();
 				Statement stmt = conn.createStatement(); ) {
@@ -106,6 +150,14 @@ public class QuestionsUtil {
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 			System.exit( 0 );
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

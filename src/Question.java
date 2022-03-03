@@ -1,3 +1,6 @@
+package triviaMaze;
+import java.sql.SQLException;
+
 /**
  * @author Nordine, David, Boda, Brianna
  *
@@ -7,11 +10,16 @@ public class Question {
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
 	private String[] myChoices = new String[4];
-	private QuestionsUtil util = new QuestionsUtil();
+	private QuestionDatabaseService util = new QuestionDatabaseService();
 
-	public Question() {
-		util.getQuestionData();
+	public Question() throws SQLException{
+		//gets all of the rows from the database and puts them into an arraylist of arrays where each array represents a question.
+		util.getQuestionDataFromDatabase();
+		//gets one array from the arrayList and asigns each of the values in the array to the corresponding question fields. This way I dont have any public set methods 
+		//setQuestionData();
 	}
+
+
 
 	/**
 	 * gets myQuestion. 
@@ -19,7 +27,7 @@ public class Question {
 	 * @return the question to be displayed. 
 	 */
 	public String getQuestion() {
-		setQuestionData();
+//		setQuestionData();
 		return myQuestion;
 	}
 	/**
@@ -41,7 +49,7 @@ public class Question {
 	/**
 	 * Picks a question and sets the data for that question. 
 	 */
-	private void setQuestionData() {
+	public void setQuestionData() {
 		String[] question = util.getQuestion();
 		myQuestion = question[0];
 		String answerChoices = question[1];

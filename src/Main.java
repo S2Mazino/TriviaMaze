@@ -1,9 +1,7 @@
+package triviaMaze;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Scanner;
-
-import org.sqlite.SQLiteDataSource;
 
 /**
  * @author Nordine
@@ -13,30 +11,24 @@ public class Main {
 
 	/**
 	 * @param args
+	 * @throws SQLException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		//=============================================================================================
 		//Adding questions
-		SQLiteDataSource ds = null;
-		Connection conn = null;
-		 try {
-	            ds = new SQLiteDataSource();
-	            ds.setUrl("jdbc:sqlite:triviaMaze.db");
-	             conn = ds.getConnection();
+//		SQLiteDataSource ds = null;
+//		Connection conn = null;
+//		 try {
+//	            ds = new SQLiteDataSource();
+//	            ds.setUrl("jdbc:sqlite:triviaMaze.db");
+//	             conn = ds.getConnection();
 //	     		Question question = new Question();
-	     		QuestionsUtil util = new QuestionsUtil();
-	     		util.createTable("QuestionTable");
-	     		util.addQuestion("QuestionTable", "True or false, all programming languages become assemly code when compiled.", "True,False", "False");
-	     		util.addQuestion("QuestionTable", "What was the first commercially available computer programming language?", "FORTRAN,Java,C,LISP", "FORTRAN");
-	     		util.addQuestion("QuestionTable", "True or false, Python was released before Java.", "True,False", "True");
-	     		util.addQuestion("QuestionTable", "Who first coined the term Computer scientist?", "Steve Jobs,George Forsythe,Howard Aiken,Charles Bachman", "George Forsythe");
-	     		util.addQuestion("QuestionTable", "When was Java initially released?", "2004,1991,2000,1995", "1995");
-	     		util.addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)");
-//	    		
+	     		QuestionDatabaseService util = new QuestionDatabaseService();
+	     		util.gameStartUp();
 
 	     		Question question = new Question();
 //	     		util.getQuestionData();
-//	    		question.setQuestionData();
+	    		question.setQuestionData();
 	    		System.out.println("Question 1:");
 	    		System.out.println(question.getQuestion());
 	    		System.out.println("Choices 1:");
@@ -45,7 +37,8 @@ public class Main {
 	    		question.setChoice("The ENIAC (Electronic Numerical Integrator and Computer)");
 	    		System.out.println(question.isCorrect());
 	    		System.out.println();
-//	    		question.setQuestionData();
+
+	    		question.setQuestionData();
 	    		System.out.println("Question 2:");
 	    		System.out.println(question.getQuestion());
 	    		System.out.println("Choices 2:");
@@ -54,7 +47,8 @@ public class Main {
 	    		question.setChoice("1995");
 	    		System.out.println(question.isCorrect());
 	    		System.out.println();
-//	    		question.setQuestionData();
+
+	    		question.setQuestionData();
 	    		System.out.println("Question 3:");
 	    		System.out.println(question.getQuestion());
 	    		System.out.println("Choices 3:");
@@ -64,18 +58,18 @@ public class Main {
 	    		System.out.println(question.isCorrect());
 	    		System.out.println();           
 	             
-	        } catch ( SQLException e ) {
-	            e.printStackTrace();
-	            System.exit(0);
-	        }finally {
-	        	if(conn != null) {
-	        		try {
-						conn.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-	        	}
-	        }
+//	        } catch ( SQLException e ) {
+//	            e.printStackTrace();
+//	            System.exit(0);
+//	        }finally {
+//	        	if(conn != null) {
+//	        		try {
+//						conn.close();
+//					} catch (SQLException e) {
+//						e.printStackTrace();
+//					}
+//	        	}
+//	        }
 		 //=======================================================================================================
 		 
 		 
