@@ -1,4 +1,3 @@
-<<<<<<< HEAD:src/Maze/Question.java
 package Maze;
 import java.sql.Connection;
 import java.sql.ResultSet;
