@@ -2,7 +2,7 @@
 import java.util.Scanner;
 
 /**
- * @author Nordine
+ * @author Nordine, Brianna
  *
  */
 public class Main {
