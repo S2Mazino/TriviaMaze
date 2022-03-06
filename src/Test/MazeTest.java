@@ -26,9 +26,7 @@ class MazeTest {
 	 */
 	@BeforeEach
 	void setUp() throws Exception {
-		final int row = 4;
-		final int col = 4;
-		myMaze = new Maze(row, col);
+		myMaze = new Maze();
 	}
 
 	/**

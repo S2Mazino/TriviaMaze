@@ -1,4 +1,8 @@
+
+
 package Maze;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -19,6 +23,7 @@ public class QuestionBean {
 		myChoices = answerChoices.split("[,]", 0);
 		myCorrectAnswer = theAnswer.toUpperCase();
 	}
+
 
 	public boolean isAsked() {
 		return asked;
