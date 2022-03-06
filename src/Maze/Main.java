@@ -56,7 +56,7 @@ public class Main {
 	    		System.out.println();
          */
 		 //=======================================================================================================
-		 
+
 		 
 		// TODO Auto-generated method stub
 		final Scanner myInput = new Scanner(System.in);
@@ -106,7 +106,6 @@ public class Main {
 					if (maze.canMove(directionHolder)) {
 						//get the question, display the question, and allow the user to input their answer.
 						QuestionBean question = QuestionBase.getQuestionBean();
-						System.out.println(question.getQuestion());
 						question.printChoices();
 						//take in the user's input
 						response = myInput.next();
@@ -114,6 +113,7 @@ public class Main {
 						question.setChoice(response);
 						//if the question is incorrect, check which direction the
 						//user was trying to go to, and lock off that pathway.
+						System.out.println(question.isCorrect());
 						if (!question.isCorrect()) {
 							System.out.println("I'm sorry, that answer is incorrect.");
 							if (directionHolder.equals("N")) {
@@ -130,9 +130,8 @@ public class Main {
 							}
 						}
 						//if the user was correct, then they can move to their desired room.
-						else {
-							if (maze.canMove(response))
-							maze.move(response);
+						else {			
+							maze.move(directionHolder);			
 						}
 						//end of checking HasPath()
 					}

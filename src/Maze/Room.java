@@ -12,13 +12,13 @@ public class Room {
 	//fields
 	private boolean myLocked;
 	private boolean myVisit;
-	private int myX;
-	private int myY;
+	private int myRow;
+	private int myCol;
 	
 	//constructor
-	public Room(int theX, int theY) {
-		myX = theX;
-		myY = theY;
+	public Room(int theRow, int theCol) {
+		myRow = theRow;
+		myCol = theCol;
 		myLocked = false;
 		myVisit = false;
 	}
@@ -40,12 +40,12 @@ public class Room {
 		myVisit = theBoolean; 
 	}
 	
-	public int getX() {
-		return myX;
+	public int getRow() {
+		return myRow;
 	}
 	
-	public int getY() {
-		return myY;
+	public int getCol() {
+		return myCol;
 	}
 	
 }

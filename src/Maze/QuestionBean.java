@@ -88,7 +88,7 @@ public class QuestionBean {
 	 * @param theChoice
 	 */
 	public void setChoice(String theChoice) {
-		myUserAnswer = theChoice.toUpperCase();;
+		myUserAnswer = theChoice.toUpperCase();
 	}
 
 	/**
