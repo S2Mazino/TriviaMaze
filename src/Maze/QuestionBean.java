@@ -1,4 +1,5 @@
 
+
 package Maze;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,19 +9,29 @@ import java.sql.SQLException;
  * @author Nordine, David, Boda, Brianna
  *
  */
-public class Question {
+public class QuestionBean {
 	private String myQuestion = "";
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
 	private String[] myChoices = new String[4];
 	private QuestionDatabaseService util = new QuestionDatabaseService();
+	private boolean asked = false;
 
-	public Question() throws SQLException{
-		//gets all of the rows from the database and puts them into an arraylist of arrays where each array represents a question.
-		util.getQuestionDataFromDatabase();
-		//gets one array from the arrayList and asigns each of the values in the array to the corresponding question fields. This way I dont have any public set methods 
-		//setQuestionData();
+	public QuestionBean(String thequestion, String choices, String theAnswer) throws SQLException{
+		myQuestion = thequestion;
+		String answerChoices = choices;
+		myChoices = answerChoices.split("[,]", 0);
+		myCorrectAnswer = theAnswer.toUpperCase();
 	}
+
+
+	public boolean isAsked() {
+		return asked;
+	}
+	public void setAsked() {
+		asked = true;
+	}
+
 
 	/**
 	 * gets myQuestion. 
@@ -28,7 +39,6 @@ public class Question {
 	 * @return the question to be displayed. 
 	 */
 	public String getQuestion() {
-//		setQuestionData();
 		return myQuestion;
 	}
 	/**
@@ -46,25 +56,13 @@ public class Question {
 		}
 	}
 
-
-	/**
-	 * Picks a question and sets the data for that question. 
-	 */
-	public void setQuestionData() {
-		String[] question = util.getQuestion();
-		myQuestion = question[0];
-		String answerChoices = question[1];
-		myChoices = answerChoices.split("[,]", 0);
-		myCorrectAnswer = question[2];
-		return;
-	}
 	/**
 	 * Sets the answer variable with the users answer. 
 	 * 
 	 * @param theChoice
 	 */
 	public void setChoice(String theChoice) {
-		myUserAnswer = theChoice;
+		myUserAnswer = theChoice.toUpperCase();;
 	}
 
 	/**
