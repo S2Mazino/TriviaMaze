@@ -82,7 +82,7 @@ public class Main {
 			System.out.println("5. Exit");
 			
 			response = myInput.next();
-			if (response == NEWGAMESELECT) {
+			if (response.equals(NEWGAMESELECT)) {
 				//initialize the maze
 				maze = new Maze();
 				//increment the times played counter
@@ -103,7 +103,7 @@ public class Main {
 					directionHolder = response;
 					//call the move function in order to move.
 					//if there is a path in this maze
-					if (maze.hasPath()) {
+					if (maze.canMove(directionHolder)) {
 						//get the question, display the question, and allow the user to input their answer.
 						QuestionBean question = QuestionBase.getQuestionBean();
 						System.out.println(question.getQuestion());
@@ -116,16 +116,16 @@ public class Main {
 						//user was trying to go to, and lock off that pathway.
 						if (!question.isCorrect()) {
 							System.out.println("I'm sorry, that answer is incorrect.");
-							if (directionHolder == "N") {
+							if (directionHolder.equals("N")) {
 								maze.lockRoom(maze.getMyRow() - 1, maze.getMyCol());
 							}
-							if (directionHolder == "S") {
+							if (directionHolder.equals("S")) {
 								maze.lockRoom(maze.getMyRow() + 1, maze.getMyCol());
 							}
-							if (directionHolder == "E") {
+							if (directionHolder.equals("E")) {
 								maze.lockRoom(maze.getMyRow(), maze.getMyCol() + 1);
 							}
-							if (directionHolder == "W") {
+							if (directionHolder.equals("W")) {
 								maze.lockRoom(maze.getMyRow(), maze.getMyCol() - 1);
 							}
 						}
@@ -155,11 +155,11 @@ public class Main {
 				}
 			}
 			
-			else if (response == LOADGAMESELECT) {
+			else if (response.equals(LOADGAMESELECT)) {
 				//loading and saving games are not implemented yet.
 			}
 			
-			else if (response == HELPSELECT) {
+			else if (response.equals(HELPSELECT)) {
 				//This is where a series of instructions are printed onto the console
 				//before sending you back to the main menu options.
 				boolean helpmenudone = false;
@@ -167,19 +167,19 @@ public class Main {
 					displayOpeningInstr();
 					response = myInput.next();
 					System.out.println("Press N to continue.");
-					if (response == "N") {
+					if (response.equals("N")) {
 						displayPlayerInstr();
 						System.out.println("Press N to continue.");
 						response = myInput.next();
-						if (response == "N") {
+						if (response.equals("N")) {
 							displayDoorInstr();
 							System.out.println("Press N to continue.");
 							response = myInput.next();
-							if (response == "N") {
+							if (response.equals("N")) {
 								displaySaveLoadInstr();
 								System.out.println("Press N to go back to the main menu.");
 								response = myInput.next();
-								if (response == "N") {
+								if (response.equals("N")) {
 									helpmenudone = true;
 								}
 							}
@@ -188,22 +188,17 @@ public class Main {
 				}
 			}
 			
-			else if (response == CHEATSELECT) {
+			else if (response.equals(CHEATSELECT)) {
 				//This is where a text-based cheats menu would be
 				System.out.println("You picked the cheats menu when there's nothing here!");
 			}
 			
-			else if (response == EXITGAME) {
+			else if (response.equals(EXITGAME)) {
 				myGameDone = true;
 			}
 			
 			else {
 				System.out.println("Invalid input, please try again.");
-				System.out.println("1. New Game");
-				System.out.println("2. Load Saved Game");
-				System.out.println("3. Help");
-				System.out.println("4. Cheats Menu");
-				System.out.println("5. Exit");
 			}
 		}
 		myInput.close();
@@ -223,7 +218,7 @@ public class Main {
 		System.out.println("Select your answer with the shown key.");
 		System.out.println("If you select the right answer, you will go through the door and into the room.");
 		System.out.println("Select the wrong answer and the door will be blocked (represented by an 'x') and "
-							+ "you will be unable to pass through the door. These doors cannot be opened again!");
+							+ " you will be unable to pass through the door. These doors cannot be opened again!");
 		System.out.println("If you cannot get to the exit or you become entrapped in a room, it's game over!");
 	}
 	
@@ -231,18 +226,18 @@ public class Main {
 		System.out.println("To play the Trivia Maze, you can select a New Game" +
 				" to start a new game file and start playing the maze.");
 		System.out.println("The first number you enter when starting a new game" +
-				"determines the number of rows your maze has.");
+				" determines the number of rows your maze has.");
 		System.out.println("The second number you enter when starting a new game" +
-				"determines the number of columns your maze has.");
+				" determines the number of columns your maze has.");
 		System.out.println("The Trivia Maze will be created based on the parameters" +
-				"And the goal is the reach the End Room to wind the game!");
+				" and the goal is the reach the End Room to wind the game!");
 	}
 	
 	public static void displaySaveLoadInstr() {
 		System.out.println("To save a current game, while playing the game, press the" +
-				"'F' key in order to save your progress..");
+				" 'F' key in order to save your progress..");
 		System.out.println("To load your last save, go back to the main menu" +
-				"and select Load Saved Game.");
+				" and select Load Saved Game.");
 		System.out.println("While playing the game, press the 'X' key to leave the current game" +
 				" without saving your progress.");
 	}
