@@ -63,70 +63,14 @@ public class Main {
 		String response;
 		String directionHolder;
 		Maze maze = null;
+		int timesPlayed = 0;
 		int winCounter = 0;
-		final int SET_ROWS = 4;
-		final int SET_COLS = 4;
 		final String NEWGAMESELECT = "1";
 		final String LOADGAMESELECT = "2";
 		final String HELPSELECT = "3";
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
 		boolean myGameDone = false;
-		
-
-		
-<<<<<<< HEAD
-=======
-		//will add valid input condition later
-
-		
-		maze = new Maze();
-		
-		if(!maze.win()) {
-			//if player hasnt won game yet
-			//display maze
-			//display the options(rooms)
-			//they choose which direction
-			//if(canMove(reponse))
-			//ask question
-			//display question option
-			//ask for input to question
-			//correct, move function
-			//islocked() function
-			//else reponse again
-		}
-		
-		
-		
-//		maze.lockRoom(2, 1);
-//		maze.lockRoom(2, 2);
-//		maze.lockRoom(2, 3);
-//		maze.lockRoom(2, 4);
->>>>>>> main
-		
-		maze.displayMaze();
-		System.out.println(maze.availableRoom());
-		//ask for which direction
-		//can move?
-		//ask(display) the question
-		//ask for answer input
-		//correct answer?
-		//move
-		//if not, tell them wrong answer lock the room and ask for another direction
-		//if no more room, lost the game
-<<<<<<< HEAD
-		//System.out.println("move? " + maze.move("S"));
-=======
-		
-		System.out.println("move? " + maze.canMove("S"));
-		if(maze.canMove("S")) {
-			maze.move("S");
-		}
-		
->>>>>>> main
-		maze.displayMaze();
-		System.out.println(maze.availableRoom());
-		
 		
 		while (!myGameDone) {
 			System.out.println("Hello, welcome to the Trivia Maze, please type in" +
@@ -141,6 +85,8 @@ public class Main {
 			if (response == NEWGAMESELECT) {
 				//initialize the maze
 				maze = new Maze(SET_ROWS, SET_COLS);
+				//increment the times played counter
+				timesPlayed++;
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -194,10 +140,12 @@ public class Main {
 					//maze.resetVisit();
 					winCounter++;
 					System.out.println("You've won a total of: " + winCounter + " times!");
+					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
 				}
 				else {
 					System.out.println("Game Over! You didn't beat the Trivia Maze.");
+					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
 				}
 			}
@@ -255,7 +203,6 @@ public class Main {
 		}
 		myInput.close();
 	}
-<<<<<<< HEAD
 	
 	public static void displayPlayerInstr() {
 		System.out.println("The starting point is located at the top-right corner.");
@@ -301,7 +248,3 @@ public class Main {
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
 	}
 }
-=======
-
-}
->>>>>>> main
