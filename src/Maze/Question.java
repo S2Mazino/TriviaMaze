@@ -22,8 +22,6 @@ public class Question {
 		//setQuestionData();
 	}
 
-
-
 	/**
 	 * gets myQuestion. 
 	 * 

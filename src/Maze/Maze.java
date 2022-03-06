@@ -24,12 +24,12 @@ public class Maze {
 	 * @param theEndCol
 	 * @param theEndRow
 	 */
-	public Maze(final int theRow, final int theCol) {
+	public Maze() {
 		myCol = 1;
 		myRow = 1;
-		myEndCol = theCol;
-		myEndRow = theRow;
-		generateMaze(theRow, theCol);
+		myEndCol = 4;
+		myEndRow = 4;
+		generateMaze(myEndRow, myEndCol);
 	}
 	
 	

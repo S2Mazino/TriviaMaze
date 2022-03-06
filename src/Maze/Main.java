@@ -28,8 +28,8 @@ public class Main {
 	     		util.gameStartUp();
 
 	     		Question question = new Question();
+
 //	     		util.getQuestionData();
-	    		question.setQuestionData();
 	    		System.out.println("Question 1:");
 	    		System.out.println(question.getQuestion());
 	    		System.out.println("Choices 1:");
@@ -82,12 +82,25 @@ public class Main {
 		
 		
 		//will add valid input condition later
-		System.out.print("Input amount of rows(between 4 and 10): ");
-		myRows = myInput.nextInt();
-		System.out.print("Input amount of cols(between 4 and 10): ");
-		myCols = myInput.nextInt();
+
 		
-		maze = new Maze(myRows, myCols);
+		maze = new Maze();
+		
+		if(!maze.win()) {
+			//if player hasnt won game yet
+			//display maze
+			//display the options(rooms)
+			//they choose which direction
+			//if(canMove(reponse))
+			//ask question
+			//display question option
+			//ask for input to question
+			//correct, move function
+			//islocked() function
+			//else reponse again
+		}
+		
+		
 		
 //		maze.lockRoom(2, 1);
 //		maze.lockRoom(2, 2);
