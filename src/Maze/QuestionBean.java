@@ -1,4 +1,7 @@
+
+
 package Maze;
+
 
 /**
  * @author David, Nordine, Boda, Brianna
@@ -42,7 +45,7 @@ public class QuestionBean {
 
 	/**
 	 * Returns myAsked. 
-	 * @return
+	 * @return myAsked
 	 */
 	public boolean isAsked() {
 		return myAsked;
