@@ -79,6 +79,7 @@ public class Main {
 		String response;
 		String directionHolder;
 		Maze maze = null;
+		int winCounter = 0;
 		final int SET_ROWS = 4;
 		final int SET_COLS = 4;
 		final String NEWGAMESELECT = "1";
@@ -119,8 +120,8 @@ public class Main {
 			if (response == NEWGAMESELECT) {
 				//initialize the maze
 				maze = new Maze(SET_ROWS, SET_COLS);
-				//while the maze is not set to a win state
-				while (!maze.win()) {
+				//while the maze is not set to a win state and there's still a path availible
+				while(!maze.win() && maze.hasPath()) {
 					//display the maze
 					maze.displayMaze();
 					//show all available pathways
@@ -163,11 +164,20 @@ public class Main {
 						}
 						//end of checking HasPath()
 					}
-					//last message it executes before the function ends.
-					if (maze.win()) {
-						System.out.println("Congratulations, you won the Trivia Maze!");
-					} 
 					//run through the while loop again.
+				}
+				//if the game was ended with the win flag being set to true
+				//congratulate the player. Otherwise, acknowledge the loss.
+				if (maze.win()) {
+					System.out.println("Congratulations, you won the Trivia Maze!");
+					//maze.resetVisit();
+					winCounter++;
+					System.out.println("You've won a total of: " + winCounter + " times!");
+					displayRetryMainGame();
+				}
+				else {
+					System.out.println("Game Over! You didn't beat the Trivia Maze.");
+					displayRetryMainGame();
 				}
 			}
 			
@@ -214,12 +224,12 @@ public class Main {
 			}
 			
 			else {
-				System.out.print("Invalid input, please try again.");
-				System.out.print("1. New Game");
-				System.out.print("2. Load Saved Game");
-				System.out.print("3. Help");
-				System.out.print("4. Cheats Menu");
-				System.out.print("5. Exit");
+				System.out.println("Invalid input, please try again.");
+				System.out.println("1. New Game");
+				System.out.println("2. Load Saved Game");
+				System.out.println("3. Help");
+				System.out.println("4. Cheats Menu");
+				System.out.println("5. Exit");
 			}
 		}
 		myInput.close();
@@ -261,5 +271,11 @@ public class Main {
 				"and select Load Saved Game.");
 		System.out.println("While playing the game, press the 'X' key to leave the current game" +
 				" without saving your progress.");
+	}
+	
+	public static void displayRetryMainGame() {
+		System.out.println("Would you like to play again?");
+		System.out.println("To play again, press P in order to reset to a new maze.");
+		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
 	}
 }
