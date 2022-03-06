@@ -4,17 +4,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.sqlite.SQLiteDataSource;
 
 
 public class QuestionDatabaseService {
 
-	private List<Integer> myUsedQuestions = new ArrayList<Integer>();
-	private List<String[]> myQuestions = new ArrayList<String[]>();
+	private Map<Integer, QuestionBean> questions = new HashMap<Integer, QuestionBean>();
 	private Integer myQuestionNumber = 0;
-	private Integer num;
 	private SQLiteDataSource ds = null;
 	private Connection conn = null;
 
@@ -46,23 +46,16 @@ public class QuestionDatabaseService {
 		}
 	}
 
-	public String[] getQuestion() {
-		String[] q = new String[3];
-		for(int i = 0; i < myQuestions.size(); i++) {
-			int num2 = num;
-			if(!myQuestions.isEmpty()) {
-				if(myUsedQuestions.contains(num)) {
-					myUsedQuestions.remove(num);
-					q = myQuestions.remove(num2);
-					num = num - 1;
-					System.out.println("=================");
-					return q;
-				}
+	public QuestionBean getQuestionBean() throws SQLException {
+		QuestionBean q = null;
+		for(int i = 0; i < questions.size(); i++) {
+			q = questions.get(i);
+			if(!q.isAsked()) {
+				q.setAsked();
+				return q;
 			}
 		}
-		q[0] = "No more questions in the database. ";
-		q[1] = "No more questions in the database. ";
-		q[2] = "No more questions in the database. ";
+		q = new QuestionBean("No more questions in the database. ", "No more questions in the database. ", "No more questions in the database. ");
 		return q;
 	}
 	/**
@@ -77,16 +70,10 @@ public class QuestionDatabaseService {
 				Statement stmt = conn.createStatement(); ) {			
 			ResultSet rs = stmt.executeQuery(query);
 			while ( rs.next() ) { 
-				String[] tempArr = new String[3];
-				myUsedQuestions.add(rs.getInt("QUESTIONNUMBER"));
-				int i = 0;
-				for (ColumnName col : ColumnName.values()) {
-					tempArr[i] = rs.getString(col.name);
-		            i++;
-		        }
-				myQuestions.add(tempArr);
+				Integer questionNumber = rs.getInt("QUESTIONNUMBER");
+				QuestionBean q = new QuestionBean(rs.getString(ColumnName.COL1.name), rs.getString(ColumnName.COL2.name),rs.getString(ColumnName.COL3.name));
+				questions.put(questionNumber, q);
 			}
-			num = myQuestions.size() - 1;
 		} catch ( SQLException e ) {
 			e.printStackTrace();
 		} finally {
@@ -102,12 +89,13 @@ public class QuestionDatabaseService {
 	}
 	public void gameStartUp() {
 		createTable("QuestionTable");
- 		addQuestion("QuestionTable", "True or false, all programming languages become assemly code when compiled.", "True,False", "False");
+ 		addQuestion("QuestionTable", "True or False, all programming languages become assemly code when compiled.", "True,False", "False");
  		addQuestion("QuestionTable", "What was the first commercially available computer programming language?", "FORTRAN,Java,C,LISP", "FORTRAN");
- 		addQuestion("QuestionTable", "True or false, Python was released before Java.", "True,False", "True");
+ 		addQuestion("QuestionTable", "True or False, Python was released before Java.", "True,False", "True");
  		addQuestion("QuestionTable", "Who first coined the term Computer scientist?", "Steve Jobs,George Forsythe,Howard Aiken,Charles Bachman", "George Forsythe");
  		addQuestion("QuestionTable", "When was Java initially released?", "2004,1991,2000,1995", "1995");
  		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)");
+ 		getQuestionDataFromDatabase();
 	}
 	/**
 	 * Creates a Question table with the given table name. 

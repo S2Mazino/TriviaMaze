@@ -24,12 +24,12 @@ public class Maze {
 	 * @param theEndCol
 	 * @param theEndRow
 	 */
-	public Maze(final int theRow, final int theCol) {
+	public Maze() {
 		myCol = 1;
 		myRow = 1;
-		myEndCol = theCol;
-		myEndRow = theRow;
-		generateMaze(theRow, theCol);
+		myEndCol = 4;
+		myEndRow = 4;
+		generateMaze(myEndRow, myEndCol);
 	}
 	
 	
@@ -186,7 +186,6 @@ public class Maze {
 	 * @param theDirection the desired direction to move in
 	 */
 	public void move(final String theDirection) {
-		boolean moved = false;
 		if(theDirection.equals("N")) {
 			myRow--;
 		}else if(theDirection.equals("E")) {

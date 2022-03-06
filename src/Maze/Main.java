@@ -16,61 +16,45 @@ public class Main {
 	 */
 	public static void main(String[] args) throws SQLException {
 		//=============================================================================================
-		//Adding questions
-//		SQLiteDataSource ds = null;
-//		Connection conn = null;
-//		 try {
-//	            ds = new SQLiteDataSource();
-//	            ds.setUrl("jdbc:sqlite:triviaMaze.db");
-//	             conn = ds.getConnection();
-//	     		Question question = new Question();
+		//testing printing question and its data
+
 	     		QuestionDatabaseService util = new QuestionDatabaseService();
 	     		util.gameStartUp();
 
-	     		Question question = new Question();
 //	     		util.getQuestionData();
-	    		question.setQuestionData();
+
+	     		
+	    		QuestionBean q1 = util.getQuestionBean();
+
 	    		System.out.println("Question 1:");
-	    		System.out.println(question.getQuestion());
+	    		System.out.println(q1.getQuestion());
 	    		System.out.println("Choices 1:");
-	    		question.printChoices();
+	    		q1.printChoices();
 	    		System.out.println("IsCorrect: ");
-	    		question.setChoice("The ENIAC (Electronic Numerical Integrator and Computer)");
-	    		System.out.println(question.isCorrect());
+	    		q1.setChoice("FaLse");
+	    		System.out.println(q1.isCorrect());
 	    		System.out.println();
 
-	    		question.setQuestionData();
-	    		System.out.println("Question 2:");
-	    		System.out.println(question.getQuestion());
-	    		System.out.println("Choices 2:");
-	    		question.printChoices();
+	    		QuestionBean q2 = util.getQuestionBean();
+	    		System.out.println("Question 1:");
+	    		System.out.println(q2.getQuestion());
+	    		System.out.println("Choices 1:");
+	    		q2.printChoices();
 	    		System.out.println("IsCorrect: ");
-	    		question.setChoice("1995");
-	    		System.out.println(question.isCorrect());
+	    		q2.setChoice("FORTRAN");
+	    		System.out.println(q2.isCorrect());
 	    		System.out.println();
-
-	    		question.setQuestionData();
-	    		System.out.println("Question 3:");
-	    		System.out.println(question.getQuestion());
-	    		System.out.println("Choices 3:");
-	    		question.printChoices();
+	    		
+	    		QuestionBean q3 = util.getQuestionBean();
+	    		System.out.println("Question 1:");
+	    		System.out.println(q3.getQuestion());
+	    		System.out.println("Choices 1:");
+	    		q3.printChoices();
 	    		System.out.println("IsCorrect: ");
-	    		question.setChoice("George Forsythe");
-	    		System.out.println(question.isCorrect());
-	    		System.out.println();           
-	             
-//	        } catch ( SQLException e ) {
-//	            e.printStackTrace();
-//	            System.exit(0);
-//	        }finally {
-//	        	if(conn != null) {
-//	        		try {
-//						conn.close();
-//					} catch (SQLException e) {
-//						e.printStackTrace();
-//					}
-//	        	}
-//	        }
+	    		q3.setChoice("True");
+	    		System.out.println(q3.isCorrect());
+	    		System.out.println();
+         
 		 //=======================================================================================================
 		 
 		 
@@ -91,6 +75,34 @@ public class Main {
 		
 
 		
+<<<<<<< HEAD
+=======
+		//will add valid input condition later
+
+		
+		maze = new Maze();
+		
+		if(!maze.win()) {
+			//if player hasnt won game yet
+			//display maze
+			//display the options(rooms)
+			//they choose which direction
+			//if(canMove(reponse))
+			//ask question
+			//display question option
+			//ask for input to question
+			//correct, move function
+			//islocked() function
+			//else reponse again
+		}
+		
+		
+		
+//		maze.lockRoom(2, 1);
+//		maze.lockRoom(2, 2);
+//		maze.lockRoom(2, 3);
+//		maze.lockRoom(2, 4);
+>>>>>>> main
 		
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
@@ -102,7 +114,16 @@ public class Main {
 		//move
 		//if not, tell them wrong answer lock the room and ask for another direction
 		//if no more room, lost the game
+<<<<<<< HEAD
 		//System.out.println("move? " + maze.move("S"));
+=======
+		
+		System.out.println("move? " + maze.canMove("S"));
+		if(maze.canMove("S")) {
+			maze.move("S");
+		}
+		
+>>>>>>> main
 		maze.displayMaze();
 		System.out.println(maze.availableRoom());
 		
@@ -234,6 +255,7 @@ public class Main {
 		}
 		myInput.close();
 	}
+<<<<<<< HEAD
 	
 	public static void displayPlayerInstr() {
 		System.out.println("The starting point is located at the top-right corner.");
@@ -279,3 +301,7 @@ public class Main {
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
 	}
 }
+=======
+
+}
+>>>>>>> main
