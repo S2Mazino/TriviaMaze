@@ -1,8 +1,7 @@
 package Maze;
-import java.sql.SQLException;
 
 /**
- * @author Nordine, David, Boda, Brianna
+ * @author David, Nordine, Boda, Brianna
  *
  */
 public class QuestionBean {
@@ -10,21 +9,49 @@ public class QuestionBean {
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
 	private String[] myChoices = new String[4];
-	private QuestionDatabaseService util = new QuestionDatabaseService();
-	private boolean asked = false;
+	private boolean myAsked = false;
+	
+	/**
+	 * Returns myCorrectAnswer for testing purposes. 
+	 * @return myCorrectAnswer
+	 */
+	public String getCorrect() {
+		return myCorrectAnswer;
+	}
+	
+	/**
+	 * Returns myUserAnswer for testing purposes. 
+	 * @return myUserAnswer
+	 */
+	public String getUserEnterd() {
+		return myUserAnswer;
+	}
 
-	public QuestionBean(String thequestion, String choices, String theAnswer) throws SQLException{
+	/**
+	 * Constructor to create a new QuestionBean object using the given data. 
+	 * @param thequestion
+	 * @param theChoices
+	 * @param theAnswer
+	 */
+	public QuestionBean(String thequestion, String theChoices, String theAnswer) {
 		myQuestion = thequestion;
-		String answerChoices = choices;
+		String answerChoices = theChoices;
 		myChoices = answerChoices.split("[,]", 0);
 		myCorrectAnswer = theAnswer.toUpperCase();
 	}
 
+	/**
+	 * Returns myAsked. 
+	 * @return
+	 */
 	public boolean isAsked() {
-		return asked;
+		return myAsked;
 	}
+	/**
+	 * Sets a boolean for if it has been asked. 
+	 */
 	public void setAsked() {
-		asked = true;
+		myAsked = true;
 	}
 
 
@@ -45,6 +72,9 @@ public class QuestionBean {
 		return myChoices;
 	}
 
+	/**
+	 * This prints out the choices. This does not follow the MVC design pattern and is only here for testing purposes. 
+	 */
 	public void printChoices() {
 		for(int i = 0; i < myChoices.length; i++) {
 			System.out.println(myChoices[i]);
@@ -61,7 +91,7 @@ public class QuestionBean {
 	}
 
 	/**
-	 * checks to see if the user provided answer is correct. 
+	 * Checks to see if the user provided answer is correct. 
 	 * 
 	 * @return Boolean representing if the answer is correct. 
 	 */
@@ -74,7 +104,7 @@ public class QuestionBean {
 		return false;
 	}
 	/**
-	 * Generates a String that will be used to display the question and the choices. 
+	 * Generates a String that will be used to display the question and the choices. This does not follow the MVC design pattern and is only here for testing purposes. 
 	 * 
 	 * @return A String representing the question display. 
 	 *
