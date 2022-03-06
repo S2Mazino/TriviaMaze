@@ -1,8 +1,3 @@
-<<<<<<< HEAD:src/Maze/Question.java
-=======
-
-
->>>>>>> main:src/Maze/QuestionBean.java
 package Maze;
 import java.sql.Connection;
 import java.sql.ResultSet;

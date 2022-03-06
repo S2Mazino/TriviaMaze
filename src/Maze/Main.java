@@ -17,7 +17,7 @@ public class Main {
 	public static void main(String[] args) throws SQLException {
 		//=============================================================================================
 		//testing printing question and its data
-
+				/*
 	     		QuestionDatabaseService util = new QuestionDatabaseService();
 	     		util.gameStartUp();
 
@@ -54,7 +54,7 @@ public class Main {
 	    		q3.setChoice("True");
 	    		System.out.println(q3.isCorrect());
 	    		System.out.println();
-         
+         */
 		 //=======================================================================================================
 		 
 		 
@@ -84,9 +84,13 @@ public class Main {
 			response = myInput.next();
 			if (response == NEWGAMESELECT) {
 				//initialize the maze
-				maze = new Maze(SET_ROWS, SET_COLS);
+				maze = new Maze();
 				//increment the times played counter
 				timesPlayed++;
+				//Initialize the question database
+				QuestionDatabaseService QuestionBase = new QuestionDatabaseService();
+				QuestionBase.gameStartUp();
+				
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -100,9 +104,10 @@ public class Main {
 					//call the move function in order to move.
 					//if there is a path in this maze
 					if (maze.hasPath()) {
-						//display the question and allow the user to input their answer.
-						//question.getQuestionData(tableName, ds);
-						question.display();
+						//get the question, display the question, and allow the user to input their answer.
+						QuestionBean question = QuestionBase.getQuestionBean();
+						System.out.println(question.getQuestion());
+						question.printChoices();
 						//take in the user's input
 						response = myInput.next();
 						//set the user input to check if it's the correct answer
