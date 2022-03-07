@@ -77,7 +77,7 @@ public class Main {
 			
 			if (!replayFlag) {
 				displayIntroMenu();	
-				response = myInput.next();
+				response = myInput.nextLine();
 			}
 			
 			if (response.equals(NEWGAMESELECT)) {
@@ -97,7 +97,7 @@ public class Main {
 					System.out.println(maze.availableRoom());
 					//take in the user's input on where they want to go
 					System.out.println("Where would you like to move?: ");
-					response = myInput.next();
+					response = myInput.nextLine();
 					directionHolder = response;
 					//call the move function in order to move.
 					//if there is a path in this maze
@@ -107,7 +107,7 @@ public class Main {
 						System.out.println(question.getQuestion());
 						question.printChoices();
 						//take in the user's input
-						response = myInput.next();
+						response = myInput.nextLine();
 						//set the user input to check if it's the correct answer
 						question.setChoice(response);
 						//if the question is incorrect, check which direction the
@@ -145,7 +145,7 @@ public class Main {
 					System.out.println("You've won a total of: " + winCounter + " times!");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
-					response = myInput.next();
+					response = myInput.nextLine();
 					if (response.equals("X")) {
 						replayFlag = false;
 						continue;
@@ -159,7 +159,7 @@ public class Main {
 					System.out.println("Game Over! You didn't beat the Trivia Maze.");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
-					response = myInput.next();
+					response = myInput.nextLine();
 					if (response.equals("X")) {
 						replayFlag = false;
 						continue;
@@ -181,20 +181,20 @@ public class Main {
 				boolean helpmenudone = false;
 				while (!helpmenudone) {
 					displayOpeningInstr();
-					response = myInput.next();
+					response = myInput.nextLine();
 					System.out.println("Press N to continue.");
 					if (response.equals("N")) {
 						displayPlayerInstr();
 						System.out.println("Press N to continue.");
-						response = myInput.next();
+						response = myInput.nextLine();
 						if (response.equals("N")) {
 							displayDoorInstr();
 							System.out.println("Press N to continue.");
-							response = myInput.next();
+							response = myInput.nextLine();
 							if (response.equals("N")) {
 								displaySaveLoadInstr();
 								System.out.println("Press N to go back to the main menu.");
-								response = myInput.next();
+								response = myInput.nextLine();
 								if (response.equals("N")) {
 									helpmenudone = true;
 								}
