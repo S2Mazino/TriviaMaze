@@ -1,6 +1,5 @@
 package Maze;
 
-
 /**
  * @author David, Nordine, Boda, Brianna
  *
@@ -34,7 +33,7 @@ public class QuestionBean {
 	 * @param theChoices
 	 * @param theAnswer
 	 */
-	public QuestionBean(String thequestion, String theChoices, String theAnswer) {
+	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
 		myQuestion = thequestion;
 		String answerChoices = theChoices;
 		myChoices = answerChoices.split("[,]", 0);
@@ -43,7 +42,7 @@ public class QuestionBean {
 
 	/**
 	 * Returns myAsked. 
-	 * @return myAsked
+	 * @return
 	 */
 	public boolean isAsked() {
 		return myAsked;
@@ -87,8 +86,8 @@ public class QuestionBean {
 	 * 
 	 * @param theChoice
 	 */
-	public void setChoice(String theChoice) {
-		myUserAnswer = theChoice.toUpperCase();
+	public void setChoice(final String theChoice) {
+		myUserAnswer = theChoice.toUpperCase();;
 	}
 
 	/**
