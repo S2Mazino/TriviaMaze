@@ -117,22 +117,21 @@ public class Main {
 						if (!question.isCorrect()) {
 							System.out.println("I'm sorry, that answer is incorrect.");
 							if (directionHolder.equals("N")) {
-								maze.lockRoom(maze.getMyRow() - 1, maze.getMyCol());
+								maze.lockRoom(maze.getMyCol(), maze.getMyRow() - 1);
 							}
 							if (directionHolder.equals("S")) {
-								maze.lockRoom(maze.getMyRow() + 1, maze.getMyCol());
+								maze.lockRoom(maze.getMyCol(), maze.getMyRow() + 1);
 							}
 							if (directionHolder.equals("E")) {
-								maze.lockRoom(maze.getMyRow(), maze.getMyCol() + 1);
+								maze.lockRoom(maze.getMyCol() + 1, maze.getMyRow());
 							}
 							if (directionHolder.equals("W")) {
-								maze.lockRoom(maze.getMyRow(), maze.getMyCol() - 1);
+								maze.lockRoom(maze.getMyCol() - 1, maze.getMyRow());
 							}
 						}
 						//if the user was correct, then they can move to their desired room.
 						else {
-							if (maze.canMove(response))
-							maze.move(response);
+							maze.move(directionHolder);
 						}
 						//end of checking HasPath()
 					}
