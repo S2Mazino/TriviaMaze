@@ -73,7 +73,9 @@ public class QuestionDatabaseService {
 	public QuestionBean getQuestionBean() throws SQLException {
 		QuestionBean q = null;
 		for(int i = 0; i < myQuestions.size(); i++) {
-			q = myQuestions.get(i);
+			int num = (int) ((Math.random() * (myQuestions.size() - 0)) + 0);
+			q = myQuestions.get(num);
+//			q = myQuestions.get(i);
 			if(!q.isAsked()) {
 				q.setAsked();
 				return q;
@@ -116,12 +118,20 @@ public class QuestionDatabaseService {
 	 */
 	public void gameStartUp() {
 		createTable("QuestionTable");
- 		addQuestion("QuestionTable", "True or False, all programming languages become assemly code when compiled.", "True,False", "False");
+ 		addQuestion("QuestionTable", "True or False: All programming languages become assemly code when compiled.", "True,False", "False");
  		addQuestion("QuestionTable", "What was the first commercially available computer programming language?", "FORTRAN,Java,C,LISP", "FORTRAN");
- 		addQuestion("QuestionTable", "True or False, Python was released before Java.", "True,False", "True");
+ 		addQuestion("QuestionTable", "True or False: Python was released before Java.", "True,False", "True");
  		addQuestion("QuestionTable", "Who first coined the term Computer scientist?", "Steve Jobs,George Forsythe,Howard Aiken,Charles Bachman", "George Forsythe");
  		addQuestion("QuestionTable", "When was Java initially released?", "2004,1991,2000,1995", "1995");
- 		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer)", "The ENIAC (Electronic Numerical Integrator and Computer)");
+ 		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer),The Whirlwind,The IBM 702,The BESK", "The ENIAC (Electronic Numerical Integrator and Computer)");
+ 		addQuestion("QuestionTable", "Is Java pass by reference or pass by value?", "Pass by reference,Pass by value", "Pass by value");
+ 		addQuestion("QuestionTable", "When was the earliest sucessful AI program developed?", "1994,1983,1951,2004", "1951");
+ //		addQuestion("QuestionTable", "True or False: Tennis for Two was the world's first video game made for entertainment. It was produced on a analog computer and it was shown in exhibits in 1958.", "True,False", "True");
+ 		addQuestion("QuestionTable", "What programming language does the Unix line of operating systems use in order to operate on numerous platforms and maintain a modular design?", "C,Java,Scala,Python", "C");
+ 		addQuestion("QuestionTable", "Bertie the Brain\" was a game made for the 1950 Canadian National Exhibition, and one of the earliest known computer games. Hosted on a thirteen foot tall computer, this machine allowed exhibition attendees to play a game of?", "Rock-Paper-Scissors,Tic-Tac-Toe,Pong,Sudoku", "Tic-Tac-Toe");
+ 		addQuestion("QuestionTable", "Which programming language listed is not a high-level programming language?", "Ruby,Java,Python,Perl", "Java");
+ 		addQuestion("QuestionTable", "True or False: The layers of a GUI, the graphical user interface, are based upon something called a revolving door system, and it contains the user, graphical interface, display server, kernel, hardware, and door manager as a part of itself.", "True,False", "False");
+ 		addQuestion("QuestionTable", "True or False: Morton Heilig built a prototype of the first \"Experience Theater\" called the Sensorama in 1962. Five short films were to be displayed in it while engaging multiple senses (sight, sound, smell, and touch). Predating digital computing, it was a mechanical device. This is considered to be one of the early examples of Virtual Reality technology.", "True,False", "True");
  		getQuestionDataFromDatabase();
 	}
 	/**
