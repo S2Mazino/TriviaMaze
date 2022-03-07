@@ -34,11 +34,14 @@ public class QuestionDatabaseService {
 	 * @return An Iterator<QuestionBean>
 	 */
 	public Iterator<QuestionBean> iterator(){
+//		List<Entry<Integer, QuestionBean>> list = new ArrayList<>(myQuestions.entrySet());
+//		list.sort(Entry.comparingByValue());
+//		return list.iterator();
 		return myQuestions.values().iterator();
 		
 //		(new ArrayList<QuestionBean>()).sort(new Comparator(){
-//
-//			@Override
+
+//		@Override
 //			public int compare(Object arg0, Object arg1) {
 //				arg0.getQuestionNumber.compareTo(arg1.getQuestionNumber());
 //			}});
@@ -123,15 +126,21 @@ public class QuestionDatabaseService {
  		addQuestion("QuestionTable", "True or False: Python was released before Java.", "True,False", "True");
  		addQuestion("QuestionTable", "Who first coined the term Computer scientist?", "Steve Jobs,George Forsythe,Howard Aiken,Charles Bachman", "George Forsythe");
  		addQuestion("QuestionTable", "When was Java initially released?", "2004,1991,2000,1995", "1995");
- 		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC (Electronic Numerical Integrator and Computer),The Whirlwind,The IBM 702,The BESK", "The ENIAC (Electronic Numerical Integrator and Computer)");
+ 		addQuestion("QuestionTable", "What was the first computer ever built?", "The ENIAC,The Whirlwind,The IBM 702,The BESK", "The ENIAC");
  		addQuestion("QuestionTable", "Is Java pass by reference or pass by value?", "Pass by reference,Pass by value", "Pass by value");
  		addQuestion("QuestionTable", "When was the earliest sucessful AI program developed?", "1994,1983,1951,2004", "1951");
- //		addQuestion("QuestionTable", "True or False: Tennis for Two was the world's first video game made for entertainment. It was produced on a analog computer and it was shown in exhibits in 1958.", "True,False", "True");
+ 		addQuestion("QuestionTable", "What was the first computer system that used color display?", "IBM 5100,Apple 1,Altair 8800,TRS-80", "Apple 1");
+ 		//addQuestion("QuestionTable", "True or False: Tennis for Two was the world's first video game made for entertainment. It was produced on a analog computer and it was shown in exhibits in 1958.", "True,False", "True");
  		addQuestion("QuestionTable", "What programming language does the Unix line of operating systems use in order to operate on numerous platforms and maintain a modular design?", "C,Java,Scala,Python", "C");
- 		addQuestion("QuestionTable", "Bertie the Brain\" was a game made for the 1950 Canadian National Exhibition, and one of the earliest known computer games. Hosted on a thirteen foot tall computer, this machine allowed exhibition attendees to play a game of?", "Rock-Paper-Scissors,Tic-Tac-Toe,Pong,Sudoku", "Tic-Tac-Toe");
+ 		addQuestion("QuestionTable", "\"Bertie the Brain\" was a game made for the 1950 Canadian National Exhibition, and one of the earliest known computer games. Hosted on a thirteen foot tall computer, this machine allowed exhibition attendees to play a game of?", "Rock-Paper-Scissors,Tic-Tac-Toe,Pong,Sudoku", "Tic-Tac-Toe");
  		addQuestion("QuestionTable", "Which programming language listed is not a high-level programming language?", "Ruby,Java,Python,Perl", "Java");
  		addQuestion("QuestionTable", "True or False: The layers of a GUI, the graphical user interface, are based upon something called a revolving door system, and it contains the user, graphical interface, display server, kernel, hardware, and door manager as a part of itself.", "True,False", "False");
  		addQuestion("QuestionTable", "True or False: Morton Heilig built a prototype of the first \"Experience Theater\" called the Sensorama in 1962. Five short films were to be displayed in it while engaging multiple senses (sight, sound, smell, and touch). Predating digital computing, it was a mechanical device. This is considered to be one of the early examples of Virtual Reality technology.", "True,False", "True");
+ 		addQuestion("QuestionTable", "How many generations of computers have been invented?", "8 generations,3 generations,5 generations,6 generations", "5 generations");
+ 		addQuestion("QuestionTable", "What was the name of the first computer programmer?", "Charles Babbage,Ada Lovelace,Alan Turing,George Forsythe", "Ada Lovelace");
+ 		addQuestion("QuestionTable", "Grace Hopper found a moth stuck  in a relay responsible for a malfunction, and removed it,  calling it _______.", "cleaning,operating,debugging,hacking", "debugging");
+ 		addQuestion("QuestionTable", "This device actually ran on electricity.  It was invented in time for the census of 1890 which only took six weeks to calculate the US population which at the time was 63 million.", "Analytical Engine,Mark 1,Difference Engine,Hollerith's Tabulating Machine,", "Hollerith's Tabulating Machine");
+ 		addQuestion("QuestionTable", "This important invention began the development of the second generation computers, which no longer required vacuum tubes, and were much more efficient and less expensive.", "CPU,Silicon chip,Transistor,Integrated circuit", "Transistor");
  		getQuestionDataFromDatabase();
 	}
 	/**
@@ -140,7 +149,7 @@ public class QuestionDatabaseService {
 	 * @param theTableName is a String representing the table name. 
 	 * @param theDs is the data source. 
 	 */
-	public void createTable(String theTableName) {
+	public void createTable(final String theTableName) {
 		String query = "CREATE TABLE IF NOT EXISTS " + theTableName + "( " + "QUESTIONNUMBER INTEGER NOT NULL, " + ColumnName.QUESTION.name() + " TEXT NOT NULL, " + ColumnName.CHOICES.name() + " TEXT NOT NULL, " +  ColumnName.ANSWER.name() + " TEXT NOT NULL )";
 		try ( Connection conn = myDs.getConnection();
 				Statement stmt = conn.createStatement(); ) {
@@ -166,7 +175,7 @@ public class QuestionDatabaseService {
 	 * @param theAnswer is a String representing the answer. 
 	 * @param theDs is the data source. 
 	 */
-	public void addQuestion(String theTableName, String theQuestion, String theChoices, String theAnswer) {
+	public void addQuestion(final String theTableName, final String theQuestion, final String theChoices, final String theAnswer) {
 		String query = "INSERT INTO " + theTableName + " ( QUESTIONNUMBER, " + ColumnName.QUESTION.name() + ", " + ColumnName.CHOICES.name() + ", " + ColumnName.ANSWER.name() + " ) VALUES ( '" + myQuestionNumber + "', '" + theQuestion + "', '" + theChoices + "', '" + theAnswer + "' )";
 		myQuestionNumber++;
 		try ( Connection conn = myDs.getConnection();
