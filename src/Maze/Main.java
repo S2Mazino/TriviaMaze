@@ -60,7 +60,7 @@ public class Main {
 		 
 		// TODO Auto-generated method stub
 		final Scanner myInput = new Scanner(System.in);
-		String response;
+		String response = "placeholder";
 		String directionHolder;
 		Maze maze = null;
 		int timesPlayed = 0;
@@ -71,17 +71,15 @@ public class Main {
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
 		boolean myGameDone = false;
+		boolean replayFlag = false;
 		
 		while (!myGameDone) {
-			System.out.println("Hello, welcome to the Trivia Maze, please type in" +
-								" a valid number to select your options:");
-			System.out.println("1. New Game");
-			System.out.println("2. Load Saved Game");
-			System.out.println("3. Help");
-			System.out.println("4. Cheats Menu");
-			System.out.println("5. Exit");
 			
-			response = myInput.next();
+			if (!replayFlag) {
+				displayIntroMenu();	
+				response = myInput.next();
+			}
+			
 			if (response.equals(NEWGAMESELECT)) {
 				//initialize the maze
 				maze = new Maze();
@@ -90,7 +88,7 @@ public class Main {
 				//Initialize the question database
 				QuestionDatabaseService QuestionBase = new QuestionDatabaseService();
 				QuestionBase.gameStartUp();
-				
+				QuestionBean question;
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -105,7 +103,8 @@ public class Main {
 					//if there is a path in this maze
 					if (maze.canMove(directionHolder)) {
 						//get the question, display the question, and allow the user to input their answer.
-						QuestionBean question = QuestionBase.getQuestionBean();
+						question = QuestionBase.getQuestionBean();
+						System.out.println(question.getQuestion());
 						question.printChoices();
 						//take in the user's input
 						response = myInput.next();
@@ -117,26 +116,21 @@ public class Main {
 						if (!question.isCorrect()) {
 							System.out.println("I'm sorry, that answer is incorrect.");
 							if (directionHolder.equals("N")) {
-								maze.lockRoom(maze.getMyCol(), maze.getMyRow() - 1);
+								maze.lockRoom(maze.getMyRow() - 1, maze.getMyCol());
 							}
 							if (directionHolder.equals("S")) {
-								maze.lockRoom(maze.getMyCol(), maze.getMyRow() + 1);
+								maze.lockRoom(maze.getMyRow() + 1, maze.getMyCol());
 							}
 							if (directionHolder.equals("E")) {
-								maze.lockRoom(maze.getMyCol() + 1, maze.getMyRow());
+								maze.lockRoom(maze.getMyRow(), maze.getMyCol() + 1);
 							}
 							if (directionHolder.equals("W")) {
-								maze.lockRoom(maze.getMyCol() - 1, maze.getMyRow());
+								maze.lockRoom(maze.getMyRow(), maze.getMyCol() - 1);
 							}
 						}
 						//if the user was correct, then they can move to their desired room.
-<<<<<<< HEAD
 						else {
 							maze.move(directionHolder);
-=======
-						else {			
-							maze.move(directionHolder);			
->>>>>>> main
 						}
 						//end of checking HasPath()
 					}
@@ -151,11 +145,29 @@ public class Main {
 					System.out.println("You've won a total of: " + winCounter + " times!");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
+					response = myInput.next();
+					if (response.equals("X")) {
+						replayFlag = false;
+						continue;
+					}
+					else if (response.equals("P")) {
+						response = NEWGAMESELECT;
+						replayFlag = true;
+					}
 				}
 				else {
 					System.out.println("Game Over! You didn't beat the Trivia Maze.");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
+					response = myInput.next();
+					if (response.equals("X")) {
+						replayFlag = false;
+						continue;
+					}
+					else if (response.equals("P")) {
+						response = NEWGAMESELECT;
+						replayFlag = true;
+					}
 				}
 			}
 			
@@ -206,6 +218,16 @@ public class Main {
 			}
 		}
 		myInput.close();
+	}
+	
+	public static void displayIntroMenu() {
+		System.out.println("Hello, welcome to the Trivia Maze, please type in" +
+				" a valid number to select your options:");
+		System.out.println("1. New Game");
+		System.out.println("2. Load Saved Game");
+		System.out.println("3. Help");
+		System.out.println("4. Cheats Menu");
+		System.out.println("5. Exit");
 	}
 	
 	public static void displayPlayerInstr() {
