@@ -85,11 +85,11 @@ public class Maze {
 	
 	/**
 	 * Locks a room given the x and y.
-	 * @param theX theRow
-	 * @param theY theCol
+	 * @param theRow
+	 * @param theCol
 	 */
-	public void lockRoom(final int theY, final int theX) {
-		myMaze[theY][theX].lockRoom();
+	public void lockRoom(final int theRow, final int theCol) {
+		myMaze[theRow][theCol].lockRoom();
 	}
 	
 	/**
@@ -136,12 +136,13 @@ public class Maze {
 		//current user's position
 		q.add(myMaze[myRow][myCol]);
 		
-		while(q.size() != 0) {
+		while(q.size() > 0) {
 			Room curr = q.remove();
-			int i = curr.getY();
-			int j = curr.getX();
+			int i = curr.getRow();
+			int j = curr.getCol();
 			
 			if(i == myEndRow && j == myEndCol) {
+				resetVisit();
 				return true;
 			}
 			

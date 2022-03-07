@@ -101,24 +101,24 @@ class RoomTest {
 	 * Test method for {@link Room#getX()}.
 	 */
 	@Test
-	void testGetX() {
+	void testGetRow() {
 		Room myRoom2 = new Room(3,4);
 		//testing the setup object
-		assertEquals("myRoom x-value not correct", myRoom.getX(), 2);
+		assertEquals("myRoom x-value not correct", myRoom.getRow(), 2);
 		//testing the new object created here
-		assertEquals("myRoom x-value not correct", myRoom2.getX(), 3);
+		assertEquals("myRoom x-value not correct", myRoom2.getRow(), 3);
 	}
 
 	/**
 	 * Test method for {@link Room#getY()}.
 	 */
 	@Test
-	void testGetY() {
+	void testGetCol() {
 		Room myRoom2 = new Room(3,4);
 		//testing the setup object
-		assertEquals("myRoom y-value not correct", myRoom.getY(), 2);
+		assertEquals("myRoom y-value not correct", myRoom.getCol(), 2);
 		//testing the new object created here
-		assertEquals("myRoom y-value not correct", myRoom2.getY(), 4);
+		assertEquals("myRoom y-value not correct", myRoom2.getCol(), 4);
 	}
 
 }
