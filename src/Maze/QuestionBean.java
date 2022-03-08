@@ -76,8 +76,10 @@ public class QuestionBean {
 	 * This prints out the choices. This does not follow the MVC design pattern and is only here for testing purposes. 
 	 */
 	public void printChoices() {
+		int num = 1;
 		for(int i = 0; i < myChoices.length; i++) {
-			System.out.println(myChoices[i]);
+			System.out.println(num + ". " + myChoices[i]);
+			num++;
 		}
 	}
 
