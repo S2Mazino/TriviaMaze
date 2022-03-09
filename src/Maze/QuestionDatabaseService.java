@@ -1,16 +1,14 @@
-package Maze;
-
 /**
+ * 
  * @author David, Nordine, Boda, Brianna
  *
  */
+package Maze;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -65,7 +63,7 @@ public class QuestionDatabaseService {
 	 * @param theDs the SQLiteDataSource. 
 	 * @throws SQLException 
 	 */
-	public void getQuestionDataFromDatabase(Connection conn) throws SQLException {
+	public void getQuestionDataFromDatabase(final Connection conn) throws SQLException {
 		String query = "SELECT * FROM QuestionTable";
 		Statement stmt = conn.createStatement();// ) {			
 		ResultSet rs = stmt.executeQuery(query);
@@ -125,7 +123,7 @@ public class QuestionDatabaseService {
 	 * @param theDs is the data source. 
 	 * @throws SQLException 
 	 */
-	public void createTable(final String theTableName, Connection myConn) throws SQLException {
+	public void createTable(final String theTableName, final Connection myConn) throws SQLException {
 		String query = "CREATE TABLE IF NOT EXISTS " + theTableName + "( " + "QUESTIONNUMBER INTEGER NOT NULL, " + ColumnName.QUESTION.name() + " TEXT NOT NULL, " + ColumnName.CHOICES.name() + " TEXT NOT NULL, " +  ColumnName.ANSWER.name() + " TEXT NOT NULL )";
 		Statement stmt = myConn.createStatement();
 		stmt.executeUpdate( query );
@@ -140,7 +138,7 @@ public class QuestionDatabaseService {
 	 * @param theDs is the data source. 
 	 * @throws SQLException 
 	 */
-	public void addQuestion(final String theTableName, final String theQuestion, final String theChoices, final String theAnswer,Connection myConn) throws SQLException {
+	public void addQuestion(final String theTableName, final String theQuestion, final String theChoices, final String theAnswer,final Connection myConn) throws SQLException {
 		String query = "INSERT INTO " + theTableName + " ( QUESTIONNUMBER, " + ColumnName.QUESTION.name() + ", " + ColumnName.CHOICES.name() + ", " + ColumnName.ANSWER.name() + " ) VALUES ( '" + myQuestionNumber + "', '" + theQuestion + "', '" + theChoices + "', '" + theAnswer + "' )";
 		myQuestionNumber++;
 		Statement stmt = myConn.createStatement();// ) {

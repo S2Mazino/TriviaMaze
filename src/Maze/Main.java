@@ -1,13 +1,12 @@
+/**
+ * @author Nordine, David, Boda, Brianna
+ *
+ */
 package Maze;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
-
-/**
- * @author Nordine, David, Boda, Brianna
- *
- */
 public class Main {
 
 	/**
@@ -162,7 +161,7 @@ public class Main {
 		myInput.close();
 	}
 	
-	public static void displayPlayerInstr() {
+	private static void displayPlayerInstr() {
 		System.out.println("The starting point is located at the top-right corner.");
 		System.out.println("The exit is located at the farthest bottom-left corner.");
 		System.out.println("You are represented by the 'u' avatar! You can move this " +
@@ -171,7 +170,7 @@ public class Main {
 		System.out.println("Press the E key for moving left, press the W key to move right.");
 	}
 	
-	public static void displayDoorInstr() {
+	private static void displayDoorInstr() {
 		System.out.println("When you go through a door (represented by a 'o') you will be asked a question!");
 		System.out.println("Select your answer with the shown key.");
 		System.out.println("If you select the right answer, you will go through the door and into the room.");
@@ -180,7 +179,7 @@ public class Main {
 		System.out.println("If you cannot get to the exit or you become entrapped in a room, it's game over!");
 	}
 	
-	public static void displayOpeningInstr() {
+	private static void displayOpeningInstr() {
 		System.out.println("To play the Trivia Maze, you can select a New Game" +
 				" to start a new game file and start playing the maze.");
 		System.out.println("The first number you enter when starting a new game" +
@@ -191,7 +190,7 @@ public class Main {
 				" and the goal is the reach the End Room to wind the game!");
 	}
 	
-	public static void displaySaveLoadInstr() {
+	private static void displaySaveLoadInstr() {
 		System.out.println("To save a current game, while playing the game, press the" +
 				" 'F' key in order to save your progress..");
 		System.out.println("To load your last save, go back to the main menu" +
@@ -200,7 +199,7 @@ public class Main {
 				" without saving your progress.");
 	}
 	
-	public static void displayRetryMainGame() {
+	private static void displayRetryMainGame() {
 		System.out.println("Would you like to play again?");
 		System.out.println("To play again, press P in order to reset to a new maze.");
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
