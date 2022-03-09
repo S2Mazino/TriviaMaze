@@ -1,6 +1,5 @@
 package Maze;
 
-
 /**
  * @author David, Nordine, Boda, Brianna
  *
@@ -34,7 +33,7 @@ public class QuestionBean {
 	 * @param theChoices
 	 * @param theAnswer
 	 */
-	public QuestionBean(String thequestion, String theChoices, String theAnswer) {
+	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
 		myQuestion = thequestion;
 		String answerChoices = theChoices;
 		myChoices = answerChoices.split("[,]", 0);
@@ -43,7 +42,7 @@ public class QuestionBean {
 
 	/**
 	 * Returns myAsked. 
-	 * @return myAsked
+	 * @return
 	 */
 	public boolean isAsked() {
 		return myAsked;
@@ -77,8 +76,10 @@ public class QuestionBean {
 	 * This prints out the choices. This does not follow the MVC design pattern and is only here for testing purposes. 
 	 */
 	public void printChoices() {
+		int num = 1;
 		for(int i = 0; i < myChoices.length; i++) {
-			System.out.println(myChoices[i]);
+			System.out.println(num + ". " + myChoices[i]);
+			num++;
 		}
 	}
 
@@ -87,8 +88,8 @@ public class QuestionBean {
 	 * 
 	 * @param theChoice
 	 */
-	public void setChoice(String theChoice) {
-		myUserAnswer = theChoice.toUpperCase();
+	public void setChoice(final String theChoice) {
+		myUserAnswer = theChoice.toUpperCase();;
 	}
 
 	/**
