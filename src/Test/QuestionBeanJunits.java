@@ -1,7 +1,9 @@
-package Maze;
+package Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import Maze.QuestionBean;
 
 class QuestionBeanJunits {
 	private QuestionBean myQuestion;
