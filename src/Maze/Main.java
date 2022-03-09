@@ -14,50 +14,7 @@ public class Main {
 	 * @param args
 	 * @throws SQLException 
 	 */
-	public static void main(String[] args) throws SQLException {
-		//=============================================================================================
-		//testing printing question and its data
-				/*
-	     		QuestionDatabaseService util = new QuestionDatabaseService();
-	     		util.gameStartUp();
-
-//	     		util.getQuestionData();
-
-	     		
-	    		QuestionBean q1 = util.getQuestionBean();
-
-	    		System.out.println("Question 1:");
-	    		System.out.println(q1.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q1.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q1.setChoice("FaLse");
-	    		System.out.println(q1.isCorrect());
-	    		System.out.println();
-
-	    		QuestionBean q2 = util.getQuestionBean();
-	    		System.out.println("Question 1:");
-	    		System.out.println(q2.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q2.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q2.setChoice("FORTRAN");
-	    		System.out.println(q2.isCorrect());
-	    		System.out.println();
-	    		
-	    		QuestionBean q3 = util.getQuestionBean();
-	    		System.out.println("Question 1:");
-	    		System.out.println(q3.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q3.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q3.setChoice("True");
-	    		System.out.println(q3.isCorrect());
-	    		System.out.println();
-         */
-		 //=======================================================================================================
-
-		 
+	public static void main(String[] args) throws SQLException {		 
 		// TODO Auto-generated method stub
 		final Scanner myInput = new Scanner(System.in);
 		String response;
@@ -81,7 +38,7 @@ public class Main {
 			System.out.println("4. Cheats Menu");
 			System.out.println("5. Exit");
 			
-			response = myInput.next();
+			response = myInput.nextLine();
 			if (response.equals(NEWGAMESELECT)) {
 				//initialize the maze
 				maze = new Maze();
@@ -90,7 +47,6 @@ public class Main {
 				//Initialize the question database
 				QuestionDatabaseService QuestionBase = new QuestionDatabaseService();
 				QuestionBase.gameStartUp();
-				
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -99,23 +55,26 @@ public class Main {
 					System.out.println(maze.availableRoom());
 					//take in the user's input on where they want to go
 					System.out.println("Where would you like to move?: ");
-					response = myInput.next();
+					response = myInput.nextLine();
 					directionHolder = response;
 					//call the move function in order to move.
 					//if there is a path in this maze
 					if (maze.canMove(directionHolder)) {
 						//get the question, display the question, and allow the user to input their answer.
 						QuestionBean question = QuestionBase.getQuestionBean();
+						System.out.println(question.getQuestion());
 						question.printChoices();
 						//take in the user's input
-						response = myInput.next();
+						response = myInput.nextLine();
+						System.out.println("reponse string: " + response);
 						//set the user input to check if it's the correct answer
 						question.setChoice(response);
 						//if the question is incorrect, check which direction the
 						//user was trying to go to, and lock off that pathway.
-						System.out.println(question.isCorrect());
 						if (!question.isCorrect()) {
 							System.out.println("I'm sorry, that answer is incorrect.");
+							System.out.println("My answer: " + question.getUserEnterd());
+							System.out.println("Correct answer: " + question.getCorrect());
 							if (directionHolder.equals("N")) {
 								maze.lockRoom(maze.getMyRow() - 1, maze.getMyCol());
 							}
@@ -164,20 +123,20 @@ public class Main {
 				boolean helpmenudone = false;
 				while (!helpmenudone) {
 					displayOpeningInstr();
-					response = myInput.next();
+					response = myInput.nextLine();
 					System.out.println("Press N to continue.");
 					if (response.equals("N")) {
 						displayPlayerInstr();
 						System.out.println("Press N to continue.");
-						response = myInput.next();
+						response = myInput.nextLine();
 						if (response.equals("N")) {
 							displayDoorInstr();
 							System.out.println("Press N to continue.");
-							response = myInput.next();
+							response = myInput.nextLine();
 							if (response.equals("N")) {
 								displaySaveLoadInstr();
 								System.out.println("Press N to go back to the main menu.");
-								response = myInput.next();
+								response = myInput.nextLine();
 								if (response.equals("N")) {
 									helpmenudone = true;
 								}
