@@ -1,15 +1,29 @@
-package Maze;
-
 /**
  * @author David, Nordine, Boda, Brianna
  *
  */
+
+package Maze;
+
 public class QuestionBean {
 	private String myQuestion = "";
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
 	private String[] myChoices = new String[4];
 	private boolean myAsked = false;
+	
+	/**
+	 * Constructor to create a new QuestionBean object using the given data. 
+	 * @param thequestion
+	 * @param theChoices
+	 * @param theAnswer
+	 */
+	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
+		myQuestion = thequestion;
+		String answerChoices = theChoices;
+		myChoices = answerChoices.split("[,]", 0);
+		myCorrectAnswer = theAnswer.toUpperCase();
+	}
 	
 	/**
 	 * Returns myCorrectAnswer for testing purposes. 
@@ -25,19 +39,6 @@ public class QuestionBean {
 	 */
 	public String getUserEnterd() {
 		return myUserAnswer;
-	}
-
-	/**
-	 * Constructor to create a new QuestionBean object using the given data. 
-	 * @param thequestion
-	 * @param theChoices
-	 * @param theAnswer
-	 */
-	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
-		myQuestion = thequestion;
-		String answerChoices = theChoices;
-		myChoices = answerChoices.split("[,]", 0);
-		myCorrectAnswer = theAnswer.toUpperCase();
 	}
 
 	/**

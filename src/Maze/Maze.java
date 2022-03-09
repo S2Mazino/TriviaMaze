@@ -1,13 +1,15 @@
+/**
+ * A Maze comprised of rooms utilizing a 2D array of rooms with various utility methods.
+ * 
+ * @author Nordine, David, Boda, Brianna
+ *
+ */
+
 package Maze;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-
-/**
- * @author Nordine, David, Boda, Brianna
- *
- */
 public class Maze {
 	//fields
 	private Room[][] myMaze;
@@ -19,10 +21,6 @@ public class Maze {
 	
 	/**
 	 * Constructor when user wants to specify starting and ending points.
-	 * 
-
-	 * @param theEndCol
-	 * @param theEndRow
 	 */
 	public Maze() {
 		myCol = 1;
@@ -30,36 +28,6 @@ public class Maze {
 		myEndCol = 4;
 		myEndRow = 4;
 		generateMaze(myEndRow, myEndCol);
-	}
-	
-	
-	/**
-	 * Generates a maze of NxN.
-	 * 
-	 * @param theRow amount of rows
-	 * @param theCol amount of columns
-	 * @return the maze
-	 */
-	private void generateMaze(final int theRow, final int theCol){
-		//implements minesweeper +2 method
-		Room[][] arr = new Room[theRow+2][theCol+2];
-		for(int i = 0; i < arr.length; i++) {
-			for(int j = 0; j < arr[0].length; j++) {
-				arr[i][j] = new Room(i, j);
-			}
-		}
-		//set first row and last row all to lock
-		for(int i = 0; i < arr[0].length; i++) {
-			arr[0][i].lockRoom();
-			arr[arr.length-1][i].lockRoom();
-		}
-		//set first column and last column all to lock
-		for(int j = 0; j < arr.length; j++) {
-			arr[j][0].lockRoom();
-			arr[j][arr[0].length-1].lockRoom();
-		}
-		
-		myMaze = arr;
 	}
 	
 	/**
@@ -85,8 +53,8 @@ public class Maze {
 	
 	/**
 	 * Locks a room given the x and y.
-	 * @param theRow
-	 * @param theCol
+	 * @param theRow row
+	 * @param theCol column
 	 */
 	public void lockRoom(final int theRow, final int theCol) {
 		myMaze[theRow][theCol].lockRoom();
@@ -101,7 +69,7 @@ public class Maze {
 	}
 	
 	/**
-	 * Returns all possible direction the user can move
+	 * Returns all possible direction the user can move.
 	 * @return all the available location from the user's position
 	 */
 	public String availableRoom() {
@@ -172,18 +140,7 @@ public class Maze {
 	}
 	
 	/**
-	 * set all room visit = false
-	 */
-	private void resetVisit() {
-		for(int i = 1; i < myMaze.length-1; i++) {
-			for(int j = 1; j < myMaze[0].length-1; j++) {
-				myMaze[i][j].setVisit(false);
-			}
-		}
-	}
-	
-	/**
-	 * Moves in desired direction 
+	 * Moves in desired direction. 
 	 * @param theDirection the desired direction to move in
 	 */
 	public void move(final String theDirection) {
@@ -219,18 +176,68 @@ public class Maze {
 	}
 	
 	/**
-	 * for testing purpose.
+	 * 
+	 * @return returns the maze.
 	 */
 	public Room[][] getRooms(){
 		return myMaze;
 	}
 	
+	/**
+	 * @return returns the user's current column.
+	 */
 	public int getMyCol() {
 		return myCol;
 	}
 	
+	/**
+	 * @return returns the user's current row.
+	 */
 	public int getMyRow() {
 		return myRow;
 	}
+	
+	/**
+	 * Generates a maze of NxN.
+	 * 
+	 * @param theRow amount of rows
+	 * @param theCol amount of columns
+	 * @return the maze
+	 */
+	private void generateMaze(final int theRow, final int theCol){
+		//implements minesweeper +2 method
+		Room[][] arr = new Room[theRow+2][theCol+2];
+		for(int i = 0; i < arr.length; i++) {
+			for(int j = 0; j < arr[0].length; j++) {
+				arr[i][j] = new Room(i, j);
+			}
+		}
+		//set first row and last row all to lock
+		for(int i = 0; i < arr[0].length; i++) {
+			arr[0][i].lockRoom();
+			arr[arr.length-1][i].lockRoom();
+		}
+		//set first column and last column all to lock
+		for(int j = 0; j < arr.length; j++) {
+			arr[j][0].lockRoom();
+			arr[j][arr[0].length-1].lockRoom();
+		}
+		
+		myMaze = arr;
+	}
+	
+	/**
+	 * set all room visit = false.
+	 */
+	private void resetVisit() {
+		for(int i = 1; i < myMaze.length-1; i++) {
+			for(int j = 1; j < myMaze[0].length-1; j++) {
+				myMaze[i][j].setVisit(false);
+			}
+		}
+	}
+	
+	
+
 
 }
