@@ -1,38 +1,207 @@
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
-
 /**
+ * A Maze comprised of rooms utilizing a 2D array of rooms with various utility methods.
+ * 
  * @author Nordine, David, Boda, Brianna
  *
  */
-public class Maze {
+
+package Maze;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Maze implements Serializable {
 	//fields
 	private Room[][] myMaze;
-	private int myX; //columns
-	private int myY; //rows
-	private int myEndX;
-	private int myEndY;
+	private int myCol;
+	private int myRow;
+	private int myEndCol;
+	private int myEndRow;
+	
 	
 	/**
 	 * Constructor when user wants to specify starting and ending points.
-	 * 
-	 * @param theUserX
-	 * @param theUserY
-	 * @param theEndX
-	 * @param theEndY
 	 */
-	public Maze(final int theRow, final int theCol) {
-		myX = 1;
-		myY = 1;
-		myEndX = theRow;
-		myEndY = theCol;
-		myMaze = generateMaze(theRow, theCol);
+	public Maze() {
+		myCol = 1;
+		myRow = 1;
+		myEndCol = 4;
+		myEndRow = 4;
+		generateMaze(myEndRow, myEndCol);
 	}
 	
+	/**
+	 * Displays a visual representation of the maze where "u" is the user, "o" is a walkable path, 
+	 * and "x" is not a walkable path.
+	 */
+	public void displayMaze() {
+		for(int i = 1; i < myMaze.length-1; i++) {
+			for(int j = 1; j < myMaze[0].length-1; j++) {
+				if(i == myRow && j == myCol) {
+					System.out.print("u");
+				}else if(i == myEndRow && j == myEndCol){
+					System.out.print("e");
+				}else if(!myMaze[i][j].isLocked()) {
+					System.out.print("o");
+				}else{
+					System.out.print("x");
+				}
+			}
+			System.out.println();
+		}
+	}
+	
+	/**
+	 * Locks a room given the x and y.
+	 * @param theRow row
+	 * @param theCol column
+	 */
+	public void lockRoom(final int theRow, final int theCol) {
+		myMaze[theRow][theCol].lockRoom();
+	}
+	
+	/**
+	 * Checks if the player reached the end goal.
+	 * @return T/F if user's x and y is equal to the end's x and y
+	 */
+	public boolean win() {
+		return myRow == myEndRow && myCol == myEndCol;
+	}
+	
+	/**
+	 * Returns all possible direction the user can move.
+	 * @return all the available location from the user's position
+	 */
+	public String availableRoom() {
+		StringBuilder sb = new StringBuilder();
+		//Up
+		if(!myMaze[myRow-1][myCol].isLocked()) {
+			sb.append("N,");
+		}
+		//Right
+		if(!myMaze[myRow][myCol+1].isLocked()) {
+			sb.append("E,");
+		}
+		//Down
+		if(!myMaze[myRow+1][myCol].isLocked()) {
+			sb.append("S,");
+		}
+		//Left
+		if(!myMaze[myRow][myCol-1].isLocked()) {
+			sb.append("W,");
+		}
+		return sb.length() == 0? sb.toString() : sb.substring(0, sb.length()-1).toString();
+	}
+	
+	/**
+	 * Checks if there is exist a valid path from current room to end room by
+	 * utilizing BFS algorithm.
+	 * @return T/F T = valid path exist, else F
+	 */
+	public boolean hasPath() {
+		
+		Queue<Room> q = new LinkedList<>();
+		//current user's position
+		q.add(myMaze[myRow][myCol]);
+		
+		while(q.size() > 0) {
+			Room curr = q.remove();
+			int i = curr.getRow();
+			int j = curr.getCol();
+			
+			if(i == myEndRow && j == myEndCol) {
+				resetVisit();
+				return true;
+			}
+			
+			myMaze[i][j].setVisit(true);
+			
+			if(myMaze[i-1][j].getVisit() == false && !myMaze[i-1][j].isLocked()) {
+				q.add(myMaze[i-1][j]); //up
+			}
+			
+			if(myMaze[i+1][j].getVisit() == false && !myMaze[i+1][j].isLocked()) {
+				q.add(myMaze[i+1][j]); //down
+			}
+			
+			if(myMaze[i][j+1].getVisit() == false && !myMaze[i][j+1].isLocked()) {
+				q.add(myMaze[i][j+1]); //right
+			}
+			
+			if(myMaze[i][j-1].getVisit() == false && !myMaze[i][j-1].isLocked()) {
+				q.add(myMaze[i][j-1]); //left
+			}
+			
+		}
+		
+		resetVisit();
+		
+		return false;
+	}
+	
+	/**
+	 * Moves in desired direction. 
+	 * @param theDirection the desired direction to move in
+	 */
+	public void move(final String theDirection) {
+		if(theDirection.equals("N")) {
+			myRow--;
+		}else if(theDirection.equals("E")) {
+			myCol++;
+		}else if(theDirection.equals("S")) {
+			myRow++;
+		}else if(theDirection.equals("W")) {
+			myCol--;
+		}
+	}
+	
+	/**
+	 * Checks if the player can move in the desired direction, returns true if successful
+	 * otherwise false.
+	 * @param theDirection N,E,S,W 
+	 * @return T/F if can move 
+	 */
+	public boolean canMove(final String theDirection) {
+		boolean move = false;
+		if(theDirection.equals("N") && (myRow-1 > 0) && !myMaze[myRow-1][myCol].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("E") && (myCol+1 < myMaze[0].length) && !myMaze[myRow][myCol+1].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("S") && (myRow+1 < myMaze.length) && !myMaze[myRow+1][myCol].isLocked()) {
+			move = true;
+		}else if(theDirection.equals("W") && (myCol-1 > 0) && !myMaze[myRow][myCol-1].isLocked()) {
+			move = true;
+		}
+		return move;
+	}
+	
+	/**
+	 * 
+	 * @return returns the maze.
+	 */
+	public Room[][] getRooms(){
+		return myMaze;
+	}
+	
+	/**
+	 * @return returns the user's current column.
+	 */
+	public int getMyCol() {
+		return myCol;
+	}
+	
+	/**
+	 * @return returns the user's current row.
+	 */
+	public int getMyRow() {
+		return myRow;
+	}
 	
 	/**
 	 * Generates a maze of NxN.
@@ -41,7 +210,7 @@ public class Maze {
 	 * @param theCol amount of columns
 	 * @return the maze
 	 */
-	private Room[][] generateMaze(final int theRow, final int theCol){
+	private void generateMaze(final int theRow, final int theCol){
 		//implements minesweeper +2 method
 		Room[][] arr = new Room[theRow+2][theCol+2];
 		for(int i = 0; i < arr.length; i++) {
@@ -60,116 +229,11 @@ public class Maze {
 			arr[j][arr[0].length-1].lockRoom();
 		}
 		
-		return arr;
+		myMaze = arr;
 	}
 	
 	/**
-	 * Displays a visual representation of the maze where "u" is the user, "o" is a walkable path, 
-	 * and "x" is not a walkable path.
-	 */
-	public void displayMaze() {
-		for(int i = 1; i < myMaze.length-1; i++) {
-			for(int j = 1; j < myMaze[0].length-1; j++) {
-				if(i == myX && j == myY) {
-					System.out.print("u");
-				}else if(i == myEndX && j == myEndY){
-					System.out.print("e");
-				}else if(!myMaze[i][j].isLocked()) {
-					System.out.print("o");
-				}else{
-					System.out.print("x");
-				}
-			}
-			System.out.println();
-		}
-		
-	}
-	
-	/**
-	 * Locks a room given the x and y.
-	 * @param theX theRow
-	 * @param theY theCol
-	 */
-	public void lockRoom(int theX, int theY) {
-		myMaze[theX][theY].lockRoom();
-	}
-	
-	/**
-	 * Checks if the player reached the end goal.
-	 * @return T/F if user's x and y is equal to the end's x and y
-	 */
-	public boolean win() {
-		return myX == myEndX && myY == myEndY;
-	}
-	
-	/**
-	 * Returns all possible direction the user can move
-	 * @return all the available location from the user's position
-	 */
-	public String availableRoom() {
-		StringBuilder sb = new StringBuilder();
-		//Up
-		if(!myMaze[myX-1][myY].isLocked()) {
-			sb.append("N,");
-		}
-		//Right
-		if(!myMaze[myX][myY+1].isLocked()) {
-			sb.append("E,");
-		}
-		//Down
-		if(!myMaze[myX+1][myY].isLocked()) {
-			sb.append("S,");
-		}
-		//Left
-		if(!myMaze[myX][myY-1].isLocked()) {
-			sb.append("W,");
-		}
-		return sb.length() == 0? sb.toString() : sb.substring(0, sb.length()-1).toString();
-	}
-	
-	/**
-	 * Checks if there is exist a valid path from current room to end room by
-	 * utilizing BFS algorithm.
-	 * @return T/F T = valid path exist, else F
-	 */
-	public boolean hasPath() {
-		
-		Queue<Room> q = new LinkedList<>();
-		//current user's position
-		q.add(myMaze[myX][myY]);
-		
-		while(q.size() != 0) {
-			Room curr = q.remove();
-			int i = curr.getX();
-			int j = curr.getY();
-			if( i <= 0 || i >= myMaze.length-1 || j <= 0 || j >= myMaze[0].length-1) {
-				continue;
-			}
-			
-			if(myMaze[i][j].getVisit() == true || myMaze[i][j].isLocked()) {
-				continue;
-			}
-			
-			if(i == myEndX && j == myEndY) {
-				return true;
-			}
-			
-			myMaze[i][j].setVisit(true);
-			
-			q.add(myMaze[i-1][j]); //left
-			q.add(myMaze[i+1][j]); //right
-			q.add(myMaze[i][j+1]); //up
-			q.add(myMaze[i][j-1]); //down
-			
-		}
-		
-		resetVisit();
-		
-		return false;
-	}
-	
-	/**
-	 * set all room visit = false
+	 * set all room visit = false.
 	 */
 	private void resetVisit() {
 		for(int i = 1; i < myMaze.length-1; i++) {
@@ -179,29 +243,44 @@ public class Maze {
 		}
 	}
 	
-	/**
-	 * Moves in desired direction and return true if the move was successful,
-	 * otherwise false.
-	 * @param theDirection the desired direction to move in
-	 * @return T/F if move was successful
-	 */
-	public boolean move(String theDirection) {
-		boolean moved = false;
-		if(theDirection.equals("N") && (myX-1 > 0) && !myMaze[myX-1][myY].isLocked()) {
-			myX--;
-			moved = true;
-		}else if(theDirection.equals("E") && (myY+1 < myMaze[0].length) && !myMaze[myX][myY+1].isLocked()) {
-			myY++;
-			moved = true;
-		}else if(theDirection.equals("S") && (myX+1 < myMaze.length) && !myMaze[myX+1][myY].isLocked()) {
-			myX++;
-			moved = true;
-		}else if(theDirection.equals("W") && (myY-1 > 0) && !myMaze[myX][myY-1].isLocked()) {
-			myY--;
-			moved = true;
+	
+	public static void main(String[]args)
+	{
+		
+		Maze serializedObjectofMaze = new Maze();
+		
+		serializedObjectofMaze.myCol = 1;
+		serializedObjectofMaze.myEndCol = 2;
+		serializedObjectofMaze.myEndRow = 1;
+		serializedObjectofMaze.myRow = 5;
+	
+		
+		
+		 try {
+			 
+			File mazeFile = new File("MazeSerialized.txt");
+			 
+			FileOutputStream file = new FileOutputStream(mazeFile);
+			
+			ObjectOutputStream out = new ObjectOutputStream(file);
+			
+			out.writeObject(serializedObjectofMaze);
+			
+			out.flush();
+			  
+			out.close();
+			
+			System.out.println("Success Your Object has been Serialized");
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return moved;
+		
+		
 	}
 	
+
 
 }
