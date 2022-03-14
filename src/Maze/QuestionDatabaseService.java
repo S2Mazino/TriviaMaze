@@ -1,4 +1,5 @@
 /**
+ * Database class to create connection to SQLite and setup tables, questions, and answers.
  * 
  * @author David, Nordine, Boda, Brianna
  *

@@ -1,4 +1,6 @@
 /**
+ * Question class that contains a single question, multiple answers to the question, and the users answers.
+ * 
  * @author David, Nordine, Boda, Brianna
  *
  */

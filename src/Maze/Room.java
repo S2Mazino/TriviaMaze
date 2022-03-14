@@ -1,4 +1,3 @@
-
 /**
  * A room in a maze that contains the status of a room.
  * 
