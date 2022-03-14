@@ -13,10 +13,15 @@ public class Main {
 	 * @param args
 	 * @throws SQLException 
 	 */
+<<<<<<< HEAD
+	public static void main(String[] args) throws SQLException {
+		 
+=======
 	public static void main(String[] args) throws SQLException {		 
+>>>>>>> main
 		// TODO Auto-generated method stub
 		final Scanner myInput = new Scanner(System.in);
-		String response;
+		String response = "placeholder";
 		String directionHolder;
 		Maze maze = null;
 		int timesPlayed = 0;
@@ -26,19 +31,20 @@ public class Main {
 		final String HELPSELECT = "3";
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
+		boolean cheatFlag = false;
 		boolean myGameDone = false;
 		
 		while (!myGameDone) {
-			System.out.println("Hello, welcome to the Trivia Maze, please type in" +
-								" a valid number to select your options:");
-			System.out.println("1. New Game");
-			System.out.println("2. Load Saved Game");
-			System.out.println("3. Help");
-			System.out.println("4. Cheats Menu");
-			System.out.println("5. Exit");
 			
+<<<<<<< HEAD
+			displayIntroMenu();	
 			response = myInput.nextLine();
+			
+=======
+			response = myInput.nextLine();
+>>>>>>> main
 			if (response.equals(NEWGAMESELECT)) {
+				boolean cheatUsed = false;
 				//initialize the maze
 				maze = new Maze();
 				//increment the times played counter
@@ -46,6 +52,10 @@ public class Main {
 				//Initialize the question database
 				QuestionDatabaseService QuestionBase = new QuestionDatabaseService();
 				QuestionBase.gameStartUp();
+<<<<<<< HEAD
+				QuestionBean question;
+=======
+>>>>>>> main
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -60,12 +70,19 @@ public class Main {
 					//if there is a path in this maze
 					if (maze.canMove(directionHolder)) {
 						//get the question, display the question, and allow the user to input their answer.
+<<<<<<< HEAD
+						question = QuestionBase.getQuestionBean();
+=======
 						QuestionBean question = QuestionBase.getQuestionBean();
+>>>>>>> main
 						System.out.println(question.getQuestion());
 						question.printChoices();
 						//take in the user's input
 						response = myInput.nextLine();
+<<<<<<< HEAD
+=======
 						System.out.println("reponse string: " + response);
+>>>>>>> main
 						//set the user input to check if it's the correct answer
 						question.setChoice(response);
 						//if the question is incorrect, check which direction the
@@ -88,8 +105,18 @@ public class Main {
 							}
 						}
 						//if the user was correct, then they can move to their desired room.
-						else {			
-							maze.move(directionHolder);			
+						else {
+							if (cheatFlag && !cheatUsed) {
+								maze.move("S");
+								maze.move("S");
+								maze.move("S");
+								maze.move("E");
+								maze.move("E");
+								cheatUsed = true;
+							}
+							else {
+								maze.move(directionHolder);
+							}
 						}
 						//end of checking HasPath()
 					}
@@ -103,12 +130,36 @@ public class Main {
 					winCounter++;
 					System.out.println("You've won a total of: " + winCounter + " times!");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
-					displayRetryMainGame();
+					boolean validAnswer = false;
+					while (!validAnswer) {
+						displayRetryMainGame();
+						response = myInput.nextLine();
+						if (response.equals("X")) {
+							validAnswer = true;
+							response = EXITGAME;
+						}
+						else if (response.equals("P")) {
+							validAnswer = true;
+							continue;
+						}
+					}
 				}
 				else {
 					System.out.println("Game Over! You didn't beat the Trivia Maze.");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
-					displayRetryMainGame();
+					boolean validAnswer = false;
+					while (!validAnswer) {
+						displayRetryMainGame();
+						response = myInput.nextLine();
+						if (response.equals("X")) {
+							validAnswer = true;
+							response = EXITGAME;
+						}
+						else if (response.equals("P")) {
+							validAnswer = true;
+							continue;
+						}
+					}
 				}
 			}
 			
@@ -147,7 +198,28 @@ public class Main {
 			
 			else if (response.equals(CHEATSELECT)) {
 				//This is where a text-based cheats menu would be
-				System.out.println("You picked the cheats menu when there's nothing here!");
+				System.out.println("Would you like to turn on 'Just Two Questions?'");
+				if (!cheatFlag) {
+					System.out.println("Just Two Questions is currently not active."); 
+				}
+				else {
+					System.out.println("Just Two Questions is currently active."); 
+				}
+				System.out.println("This cheat allows you to only need two questions to finish the maze.");
+				System.out.println("Press Y in order to activate or deactivate this cheat!");
+				System.out.println("Otherwise, press any key to go back to the main menu!");
+				response = myInput.nextLine();
+				if (response.equals("Y")) {
+					if (!cheatFlag) {
+						cheatFlag = true; 
+					}
+					else {
+						cheatFlag = false; 
+					}
+				}
+				else {
+					continue;
+				}
 			}
 			
 			else if (response.equals(EXITGAME)) {
@@ -161,7 +233,29 @@ public class Main {
 		myInput.close();
 	}
 	
+<<<<<<< HEAD
+	/**
+	 * This function is the main menu screen, and displays all possible options
+	 * for the player.
+	 */
+	public static void displayIntroMenu() {
+		System.out.println("Hello, welcome to the Trivia Maze, please type in" +
+				" a valid number to select your options:");
+		System.out.println("1. New Game");
+		System.out.println("2. Load Saved Game");
+		System.out.println("3. Help");
+		System.out.println("4. Cheats Menu");
+		System.out.println("5. Exit");
+	}
+	
+	/**
+	 * This function explains the player controls for navigating the
+	 * Trivia maze.
+	 */
+	public static void displayPlayerInstr() {
+=======
 	private static void displayPlayerInstr() {
+>>>>>>> main
 		System.out.println("The starting point is located at the top-right corner.");
 		System.out.println("The exit is located at the farthest bottom-left corner.");
 		System.out.println("You are represented by the 'u' avatar! You can move this " +
@@ -170,7 +264,15 @@ public class Main {
 		System.out.println("Press the E key for moving left, press the W key to move right.");
 	}
 	
+<<<<<<< HEAD
+	/**
+	 * This function displays text that describes how to the doors work in the
+	 * Trivia maze, and the conditions for losing in the Trivia maze.
+	 */
+	public static void displayDoorInstr() {
+=======
 	private static void displayDoorInstr() {
+>>>>>>> main
 		System.out.println("When you go through a door (represented by a 'o') you will be asked a question!");
 		System.out.println("Select your answer with the shown key.");
 		System.out.println("If you select the right answer, you will go through the door and into the room.");
@@ -179,18 +281,30 @@ public class Main {
 		System.out.println("If you cannot get to the exit or you become entrapped in a room, it's game over!");
 	}
 	
+<<<<<<< HEAD
+	/**
+	 * This function displays text that describes how to play the trivia game and
+	 * the size of the trivia maze you'll be going through.
+	 */
+	public static void displayOpeningInstr() {
+=======
 	private static void displayOpeningInstr() {
+>>>>>>> main
 		System.out.println("To play the Trivia Maze, you can select a New Game" +
 				" to start a new game file and start playing the maze.");
-		System.out.println("The first number you enter when starting a new game" +
-				" determines the number of rows your maze has.");
-		System.out.println("The second number you enter when starting a new game" +
-				" determines the number of columns your maze has.");
-		System.out.println("The Trivia Maze will be created based on the parameters" +
-				" and the goal is the reach the End Room to wind the game!");
+		System.out.println("The Trivia Maze will be a 4 by 4 square" +
+				" and the goal is the reach the End Room at the bottom right corner to win the game!");
 	}
 	
+<<<<<<< HEAD
+	/**
+	 * This function displays text that describes saving and loading data
+	 * and how to do that.
+	 */
+	public static void displaySaveLoadInstr() {
+=======
 	private static void displaySaveLoadInstr() {
+>>>>>>> main
 		System.out.println("To save a current game, while playing the game, press the" +
 				" 'F' key in order to save your progress..");
 		System.out.println("To load your last save, go back to the main menu" +
@@ -199,9 +313,20 @@ public class Main {
 				" without saving your progress.");
 	}
 	
+<<<<<<< HEAD
+	/**
+	 * This function exists to display the text describing how to return to the main
+	 * menu or to exit the game after playing through the Trivia Maze, win or lose.
+	 */
+	public static void displayRetryMainGame() {
+		System.out.println("Would you like to return to the main menu?");
+		System.out.println("To go back to the main menu, press P.");
+		System.out.println("Otherwise, press X to exit this screen and close the game!");
+=======
 	private static void displayRetryMainGame() {
 		System.out.println("Would you like to play again?");
 		System.out.println("To play again, press P in order to reset to a new maze.");
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
+>>>>>>> main
 	}
 }
