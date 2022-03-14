@@ -104,26 +104,30 @@ public class Main {
 						displayRetryMainGame();
 						response = myInput.nextLine();
 						if (response.equals("X")) {
-							!myGameDone;
-							continue;
+							validAnswer = true;
+							response = EXITGAME;
 						}
 						else if (response.equals("P")) {
-							response = NEWGAMESELECT;
+							validAnswer = true;
+							continue;
 						}
 					}
 				}
 				else {
 					System.out.println("Game Over! You didn't beat the Trivia Maze.");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
-					displayRetryMainGame();
-					response = myInput.nextLine();
-					if (response.equals("X")) {
-						replayFlag = false;
-						continue;
-					}
-					else if (response.equals("P")) {
-						response = NEWGAMESELECT;
-						replayFlag = true;
+					boolean validAnswer = false;
+					while (!validAnswer) {
+						displayRetryMainGame();
+						response = myInput.nextLine();
+						if (response.equals("X")) {
+							validAnswer = true;
+							response = EXITGAME;
+						}
+						else if (response.equals("P")) {
+							validAnswer = true;
+							continue;
+						}
 					}
 				}
 			}
@@ -177,6 +181,10 @@ public class Main {
 		myInput.close();
 	}
 	
+	/**
+	 * This function is the main menu screen, and displays all possible options
+	 * for the player.
+	 */
 	public static void displayIntroMenu() {
 		System.out.println("Hello, welcome to the Trivia Maze, please type in" +
 				" a valid number to select your options:");
@@ -187,6 +195,10 @@ public class Main {
 		System.out.println("5. Exit");
 	}
 	
+	/**
+	 * This function explains the player controls for navigating the
+	 * Trivia maze.
+	 */
 	public static void displayPlayerInstr() {
 		System.out.println("The starting point is located at the top-right corner.");
 		System.out.println("The exit is located at the farthest bottom-left corner.");
@@ -196,6 +208,10 @@ public class Main {
 		System.out.println("Press the E key for moving left, press the W key to move right.");
 	}
 	
+	/**
+	 * This function displays text that describes how to the doors work in the
+	 * Trivia maze, and the conditions for losing in the Trivia maze.
+	 */
 	public static void displayDoorInstr() {
 		System.out.println("When you go through a door (represented by a 'o') you will be asked a question!");
 		System.out.println("Select your answer with the shown key.");
@@ -205,17 +221,21 @@ public class Main {
 		System.out.println("If you cannot get to the exit or you become entrapped in a room, it's game over!");
 	}
 	
+	/**
+	 * This function displays text that describes how to play the trivia game and
+	 * the size of the trivia maze you'll be going through.
+	 */
 	public static void displayOpeningInstr() {
 		System.out.println("To play the Trivia Maze, you can select a New Game" +
 				" to start a new game file and start playing the maze.");
-		System.out.println("The first number you enter when starting a new game" +
-				" determines the number of rows your maze has.");
-		System.out.println("The second number you enter when starting a new game" +
-				" determines the number of columns your maze has.");
-		System.out.println("The Trivia Maze will be created based on the parameters" +
-				" and the goal is the reach the End Room to wind the game!");
+		System.out.println("The Trivia Maze will be a 4 by 4 square" +
+				" and the goal is the reach the End Room at the bottom right corner to win the game!");
 	}
 	
+	/**
+	 * This function displays text that describes saving and loading data
+	 * and how to do that.
+	 */
 	public static void displaySaveLoadInstr() {
 		System.out.println("To save a current game, while playing the game, press the" +
 				" 'F' key in order to save your progress..");
@@ -225,9 +245,13 @@ public class Main {
 				" without saving your progress.");
 	}
 	
+	/**
+	 * This function exists to display the text describing how to return to the main
+	 * menu or to exit the game after playing through the Trivia Maze, win or lose.
+	 */
 	public static void displayRetryMainGame() {
-		System.out.println("Would you like to play again?");
-		System.out.println("To play again, press P in order to reset to a new maze.");
-		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
+		System.out.println("Would you like to return to the main menu?");
+		System.out.println("To go back to the main menu, press P.");
+		System.out.println("Otherwise, press X to exit this screen and close the game!");
 	}
 }
