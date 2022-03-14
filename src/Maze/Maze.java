@@ -7,10 +7,15 @@
 
 package Maze;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Maze {
+public class Maze implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//fields
 	private Room[][] myMaze;
 	private int myCol;
