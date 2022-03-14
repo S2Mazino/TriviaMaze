@@ -7,7 +7,7 @@ package Maze;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Main {
+public class Main implements Serializable{
 
 	/**
 	 * @param args
@@ -204,4 +204,29 @@ public class Main {
 		System.out.println("To play again, press P in order to reset to a new maze.");
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
 	}
+	
+	Main serilizedObjectOfmainClass=new Main();
+	//serilization of an object
+	try
+    {   
+        //Saving of object in a file
+        FileOutputStream file = new FileOutputStream("serilizedObjectOfmainClass.ser");
+        ObjectOutputStream out = new ObjectOutputStream(file);
+          
+        // Method for serialization of object
+        out.writeObject(serilizedObjectOfmainClass);
+          
+        out.close();
+        file.close();
+          
+        System.out.println("Object has been serialized");
+
+    }
+      
+    catch(IOException ex)
+    {
+        System.out.println("IOException is caught");
+    }
+	myInput.close();
+	
 }
