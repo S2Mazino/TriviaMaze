@@ -15,48 +15,6 @@ public class Main {
 	 * @throws SQLException 
 	 */
 	public static void main(String[] args) throws SQLException {
-		//=============================================================================================
-		//testing printing question and its data
-				/*
-	     		QuestionDatabaseService util = new QuestionDatabaseService();
-	     		util.gameStartUp();
-
-//	     		util.getQuestionData();
-
-	     		
-	    		QuestionBean q1 = util.getQuestionBean();
-
-	    		System.out.println("Question 1:");
-	    		System.out.println(q1.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q1.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q1.setChoice("FaLse");
-	    		System.out.println(q1.isCorrect());
-	    		System.out.println();
-
-	    		QuestionBean q2 = util.getQuestionBean();
-	    		System.out.println("Question 1:");
-	    		System.out.println(q2.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q2.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q2.setChoice("FORTRAN");
-	    		System.out.println(q2.isCorrect());
-	    		System.out.println();
-	    		
-	    		QuestionBean q3 = util.getQuestionBean();
-	    		System.out.println("Question 1:");
-	    		System.out.println(q3.getQuestion());
-	    		System.out.println("Choices 1:");
-	    		q3.printChoices();
-	    		System.out.println("IsCorrect: ");
-	    		q3.setChoice("True");
-	    		System.out.println(q3.isCorrect());
-	    		System.out.println();
-         */
-		 //=======================================================================================================
-
 		 
 		// TODO Auto-generated method stub
 		final Scanner myInput = new Scanner(System.in);
@@ -71,14 +29,11 @@ public class Main {
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
 		boolean myGameDone = false;
-		boolean replayFlag = false;
 		
 		while (!myGameDone) {
 			
-			if (!replayFlag) {
-				displayIntroMenu();	
-				response = myInput.nextLine();
-			}
+			displayIntroMenu();	
+			response = myInput.nextLine();
 			
 			if (response.equals(NEWGAMESELECT)) {
 				//initialize the maze
@@ -144,15 +99,17 @@ public class Main {
 					winCounter++;
 					System.out.println("You've won a total of: " + winCounter + " times!");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
-					displayRetryMainGame();
-					response = myInput.nextLine();
-					if (response.equals("X")) {
-						replayFlag = false;
-						continue;
-					}
-					else if (response.equals("P")) {
-						response = NEWGAMESELECT;
-						replayFlag = true;
+					boolean validAnswer = false;
+					while (!validAnswer) {
+						displayRetryMainGame();
+						response = myInput.nextLine();
+						if (response.equals("X")) {
+							!myGameDone;
+							continue;
+						}
+						else if (response.equals("P")) {
+							response = NEWGAMESELECT;
+						}
 					}
 				}
 				else {
