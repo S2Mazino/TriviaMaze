@@ -1,16 +1,29 @@
-package Maze;
-
-
 /**
  * @author David, Nordine, Boda, Brianna
  *
  */
+
+package Maze;
+
 public class QuestionBean {
 	private String myQuestion = "";
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
 	private String[] myChoices = new String[4];
 	private boolean myAsked = false;
+	
+	/**
+	 * Constructor to create a new QuestionBean object using the given data. 
+	 * @param thequestion
+	 * @param theChoices
+	 * @param theAnswer
+	 */
+	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
+		myQuestion = thequestion;
+		String answerChoices = theChoices;
+		myChoices = answerChoices.split("[,]", 0);
+		myCorrectAnswer = theAnswer.toUpperCase();
+	}
 	
 	/**
 	 * Returns myCorrectAnswer for testing purposes. 
@@ -29,21 +42,8 @@ public class QuestionBean {
 	}
 
 	/**
-	 * Constructor to create a new QuestionBean object using the given data. 
-	 * @param thequestion
-	 * @param theChoices
-	 * @param theAnswer
-	 */
-	public QuestionBean(String thequestion, String theChoices, String theAnswer) {
-		myQuestion = thequestion;
-		String answerChoices = theChoices;
-		myChoices = answerChoices.split("[,]", 0);
-		myCorrectAnswer = theAnswer.toUpperCase();
-	}
-
-	/**
 	 * Returns myAsked. 
-	 * @return myAsked
+	 * @return
 	 */
 	public boolean isAsked() {
 		return myAsked;
@@ -77,8 +77,10 @@ public class QuestionBean {
 	 * This prints out the choices. This does not follow the MVC design pattern and is only here for testing purposes. 
 	 */
 	public void printChoices() {
+		int num = 1;
 		for(int i = 0; i < myChoices.length; i++) {
-			System.out.println(myChoices[i]);
+			System.out.println(num + ". " + myChoices[i]);
+			num++;
 		}
 	}
 
@@ -87,8 +89,8 @@ public class QuestionBean {
 	 * 
 	 * @param theChoice
 	 */
-	public void setChoice(String theChoice) {
-		myUserAnswer = theChoice.toUpperCase();
+	public void setChoice(final String theChoice) {
+		myUserAnswer = theChoice.toUpperCase();;
 	}
 
 	/**
