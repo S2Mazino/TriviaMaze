@@ -28,6 +28,7 @@ public class Main {
 		final String HELPSELECT = "3";
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
+		boolean cheatFlag = false;
 		boolean myGameDone = false;
 		
 		while (!myGameDone) {
@@ -36,6 +37,7 @@ public class Main {
 			response = myInput.nextLine();
 			
 			if (response.equals(NEWGAMESELECT)) {
+				boolean cheatUsed = false;
 				//initialize the maze
 				maze = new Maze();
 				//increment the times played counter
@@ -85,7 +87,17 @@ public class Main {
 						}
 						//if the user was correct, then they can move to their desired room.
 						else {
-							maze.move(directionHolder);
+							if (cheatFlag && !cheatUsed) {
+								maze.move("S");
+								maze.move("S");
+								maze.move("S");
+								maze.move("E");
+								maze.move("E");
+								cheatUsed = true;
+							}
+							else {
+								maze.move(directionHolder);
+							}
 						}
 						//end of checking HasPath()
 					}
@@ -167,7 +179,28 @@ public class Main {
 			
 			else if (response.equals(CHEATSELECT)) {
 				//This is where a text-based cheats menu would be
-				System.out.println("You picked the cheats menu when there's nothing here!");
+				System.out.println("Would you like to turn on 'Just Two Questions?'");
+				if (!cheatFlag) {
+					System.out.println("Just Two Questions is currently not active."); 
+				}
+				else {
+					System.out.println("Just Two Questions is currently active."); 
+				}
+				System.out.println("This cheat allows you to only need two questions to finish the maze.");
+				System.out.println("Press Y in order to activate or deactivate this cheat!");
+				System.out.println("Otherwise, press any key to go back to the main menu!");
+				response = myInput.nextLine();
+				if (response.equals("Y")) {
+					if (!cheatFlag) {
+						cheatFlag = true; 
+					}
+					else {
+						cheatFlag = false; 
+					}
+				}
+				else {
+					continue;
+				}
 			}
 			
 			else if (response.equals(EXITGAME)) {
