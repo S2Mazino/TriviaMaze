@@ -5,7 +5,14 @@
 
 package Maze;
 
-public class QuestionBean {
+import java.io.Serializable;
+
+public class QuestionBean implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String myQuestion = "";
 	private String myCorrectAnswer = "";
 	private String myUserAnswer = "";
@@ -18,8 +25,8 @@ public class QuestionBean {
 	 * @param theChoices
 	 * @param theAnswer
 	 */
-	public QuestionBean(final String thequestion, final String theChoices, final String theAnswer) {
-		myQuestion = thequestion;
+	public QuestionBean(final String theQuestion, final String theChoices, final String theAnswer) {
+		myQuestion = theQuestion;
 		String answerChoices = theChoices;
 		myChoices = answerChoices.split("[,]", 0);
 		myCorrectAnswer = theAnswer.toUpperCase();

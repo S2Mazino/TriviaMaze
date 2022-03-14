@@ -7,7 +7,14 @@
  */
 package Maze;
 
-public class Room {
+import java.io.Serializable;
+
+public class Room implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//fields
 	private boolean myLocked;
 	private boolean myVisit;

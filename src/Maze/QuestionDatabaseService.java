@@ -5,6 +5,7 @@
  */
 package Maze;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,8 +17,12 @@ import java.util.Map;
 import org.sqlite.SQLiteDataSource;
 
 
-public class QuestionDatabaseService {
+public class QuestionDatabaseService implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<Integer, QuestionBean> myQuestions = new HashMap<Integer, QuestionBean>();
 	private Integer myQuestionNumber = 0;
 	private SQLiteDataSource myDs = null;

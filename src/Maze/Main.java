@@ -4,21 +4,34 @@
  */
 package Maze;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-
+	
 	/**
 	 * @param args
 	 * @throws SQLException 
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) throws SQLException {		 
+	@SuppressWarnings("resource")
+	public static void main(String[] args) throws SQLException, IOException, ClassNotFoundException {		 
 		// TODO Auto-generated method stub
+		final String file = "MazeSave.txt";
 		final Scanner myInput = new Scanner(System.in);
-		String response;
+		FileOutputStream fileOut = null;
+		ObjectOutputStream out = null;
+		String response = "";
 		String directionHolder;
 		Maze maze = null;
+		//Initialize the question database
+		QuestionDatabaseService QuestionBase = null;
 		int timesPlayed = 0;
 		int winCounter = 0;
 		final String NEWGAMESELECT = "1";
@@ -28,24 +41,43 @@ public class Main {
 		final String EXITGAME = "5";
 		boolean myGameDone = false;
 		
-		while (!myGameDone) {
+		boolean menu = true;
+
+		while(menu) {
 			System.out.println("Hello, welcome to the Trivia Maze, please type in" +
-								" a valid number to select your options:");
+					" a valid number to select your options:");
 			System.out.println("1. New Game");
 			System.out.println("2. Load Saved Game");
 			System.out.println("3. Help");
 			System.out.println("4. Cheats Menu");
 			System.out.println("5. Exit");
-			
 			response = myInput.nextLine();
-			if (response.equals(NEWGAMESELECT)) {
-				//initialize the maze
-				maze = new Maze();
+			if(response.equals(EXITGAME)) {
+				myGameDone = true;
+			}else if(response.equals(NEWGAMESELECT) || response.equals(LOADGAMESELECT)) {
+				menu = false;
+			}else {
+				System.out.println("Invalid input");
+			}
+		}
+		
+		if(response.equals(NEWGAMESELECT)) {
+			maze = new Maze();
+			//initialize questionDatabase
+		}else if(response.equals(LOADGAMESELECT)) {
+			FileInputStream fileIn = new FileInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			maze = (Maze) in.readObject();
+		}
+		
+		while (!myGameDone) {
+			if (response.equals(NEWGAMESELECT) || response.equals(LOADGAMESELECT)) {
+				//initialize the question
+				QuestionBase = new QuestionDatabaseService();
+				QuestionBase.gameStartUp();
 				//increment the times played counter
 				timesPlayed++;
-				//Initialize the question database
-				QuestionDatabaseService QuestionBase = new QuestionDatabaseService();
-				QuestionBase.gameStartUp();
+				
 				//while the maze is not set to a win state and there's still a path availible
 				while(!maze.win() && maze.hasPath()) {
 					//display the maze
@@ -65,7 +97,6 @@ public class Main {
 						question.printChoices();
 						//take in the user's input
 						response = myInput.nextLine();
-						System.out.println("reponse string: " + response);
 						//set the user input to check if it's the correct answer
 						question.setChoice(response);
 						//if the question is incorrect, check which direction the
@@ -94,12 +125,15 @@ public class Main {
 						//end of checking HasPath()
 					}
 					//run through the while loop again.
+					fileOut = new FileOutputStream(file);
+					out = new ObjectOutputStream(fileOut);
+					out.writeObject(maze);
+					
 				}
 				//if the game was ended with the win flag being set to true
 				//congratulate the player. Otherwise, acknowledge the loss.
 				if (maze.win()) {
 					System.out.println("Congratulations, you won the Trivia Maze!");
-					//maze.resetVisit();
 					winCounter++;
 					System.out.println("You've won a total of: " + winCounter + " times!");
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
@@ -110,6 +144,7 @@ public class Main {
 					System.out.println("You've played a total of: " + timesPlayed + " times!");
 					displayRetryMainGame();
 				}
+				myGameDone = true;
 			}
 			
 			else if (response.equals(LOADGAMESELECT)) {
@@ -158,6 +193,8 @@ public class Main {
 				System.out.println("Invalid input, please try again.");
 			}
 		}
+		fileOut.close();
+		out.close();
 		myInput.close();
 	}
 	
@@ -204,4 +241,5 @@ public class Main {
 		System.out.println("To play again, press P in order to reset to a new maze.");
 		System.out.println("Otherwise, press X to exit this screen and return to the main menu!");
 	}
+	
 }
