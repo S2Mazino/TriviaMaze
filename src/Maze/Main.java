@@ -1,5 +1,5 @@
 /**
- * 
+ * Main class where the game is played, a single instance is created and the needed input/output stream for reading load/save and user input are made.
  * 
  * @author Nordine, David, Boda, Brianna
  *
@@ -22,31 +22,26 @@ public class Main {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-
-	@SuppressWarnings("resource")
-
 	public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {		 
 
 		// TODO Auto-generated method stub
 		final String file = "MazeSave.txt";
-		final Scanner myInput = new Scanner(System.in);
-
-		FileOutputStream fileOut = null;
-		ObjectOutputStream out = null;
-
-		String response = "placeholder";
-
-		String directionHolder;
-		Maze maze = null;
-		//Initialize the question database
-		QuestionDatabaseService QuestionBase = null;
-		int timesPlayed = 0;
-		int winCounter = 0;
 		final String NEWGAMESELECT = "1";
 		final String LOADGAMESELECT = "2";
 		final String HELPSELECT = "3";
 		final String CHEATSELECT = "4";
 		final String EXITGAME = "5";
+		final Scanner myInput = new Scanner(System.in);
+		
+		FileOutputStream fileOut = null;
+		ObjectOutputStream out = null;
+		Maze maze = null;
+		QuestionDatabaseService QuestionBase = null;
+		
+		int timesPlayed = 0;
+		int winCounter = 0;
+		String response = "placeholder";
+		String directionHolder;
 		boolean cheatFlag = false;
 		boolean myGameDone = false;		
 
@@ -66,6 +61,7 @@ public class Main {
 					FileInputStream fileIn = new FileInputStream(file);
 					ObjectInputStream in = new ObjectInputStream(fileIn);
 					maze = (Maze) in.readObject();
+					in.close();
 				}
 
 				//initialize the question
@@ -138,8 +134,7 @@ public class Main {
 						//end of checking HasPath()
 					}
 					//run through the while loop again.
-					fileOut = new FileOutputStream(file);
-					out = new ObjectOutputStream(fileOut);
+
 					out.writeObject(maze);
 					
 				}
@@ -251,6 +246,7 @@ public class Main {
 				System.out.println("Invalid input, please try again.");
 			}
 		}
+		
 		fileOut.close();
 		out.close();
 		myInput.close();

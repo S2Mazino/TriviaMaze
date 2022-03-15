@@ -9,12 +9,9 @@ package Maze;
 import java.io.Serializable;
 
 public class Room implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	
 	//fields
+	private static final long serialVersionUID = 1L;
 	private boolean myLocked;
 	private boolean myVisit;
 	private int myRow;
