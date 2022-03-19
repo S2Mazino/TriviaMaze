@@ -64,7 +64,6 @@ public class QuestionDatabaseService implements Serializable {
 	}
 	/**
 	 * Grabs all the questions from the question database and stores them in the map myQuestions. 
-	 * 
 	 * @param theTableName String representing the table name. 
 	 * @param theDs the SQLiteDataSource. 
 	 * @throws SQLException 
