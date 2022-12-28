@@ -134,7 +134,8 @@ public class Main {
 						//end of checking HasPath()
 					}
 					//run through the while loop again.
-
+					fileOut = new FileOutputStream(file);
+					out = new ObjectOutputStream(fileOut);
 					out.writeObject(maze);
 					
 				}
